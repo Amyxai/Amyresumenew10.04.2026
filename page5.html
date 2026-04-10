@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Diesel &amp; Oils · 9-Year Operational Record · Ameera Shonese Bapoo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0a0a0f;--s1:#0f0f1a;--s2:#13131f;--s3:#0d1117;
+    --v:#8b5cf6;--vl:#a78bfa;--amber:#f59e0b;--green:#10b981;--cyan:#0ff;
+    --text:#f1f0f5;--text2:#b8b4cc;--text3:#6b6880;
+    --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;min-height:100vh;overflow-x:hidden;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(10,10,15,.92);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 40px;height:52px;}
+  .nav-brand{font-family:'Instrument Serif',serif;font-size:16px;color:var(--text);text-decoration:none;}
+  .nav-links{display:flex;gap:8px;}
+  .nav-link{color:var(--text3);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    text-decoration:none;padding:6px 14px;border:1px solid transparent;border-radius:4px;
+    transition:all .2s;}
+  .nav-link:hover,.nav-link.active{color:var(--vl);border-color:var(--v);
+    box-shadow:0 0 10px rgba(139,92,246,.2);}
+  @keyframes navblink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.1;transform:scale(.55);}}
+
+  /* HERO BANNER */
+  .hero-banner{
+    padding:120px 40px 80px;
+    background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(245,158,11,.08) 0%, transparent 70%);
+    border-bottom:1px solid var(--border);
+  }
+  .hero-inner{max-width:1100px;margin:0 auto;}
+  .hero-eyebrow{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:16px;
+  }
+  .hero-title{
+    font-family:'Instrument Serif',serif;
+    font-size:clamp(36px,5.5vw,68px);
+    line-height:1.05;letter-spacing:-.02em;
+    color:var(--text);margin-bottom:12px;
+  }
+  .hero-title em{color:var(--amber);font-style:italic;}
+  .hero-meta{
+    display:flex;flex-wrap:wrap;gap:20px;margin-bottom:28px;
+  }
+  .hero-badge{
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    padding:6px 14px;border-radius:20px;
+    background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);
+    color:var(--amber);
+  }
+  .hero-badge.green{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3);color:var(--green);}
+  .hero-badge.purple{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.3);color:var(--vl);}
+  .hero-desc{
+    font-size:14px;color:var(--text2);max-width:780px;line-height:1.9;
+    border-left:3px solid var(--amber);padding-left:20px;
+  }
+  .hero-desc strong{color:var(--text);}
+
+  /* CONTENT */
+  .content{max-width:1100px;margin:0 auto;padding:80px 40px 120px;}
+
+  /* SECTION HEADING */
+  .sh{display:flex;align-items:baseline;gap:16px;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .shn{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);}
+  .sht{font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,32px);color:var(--text);}
+  .sht em{color:var(--v);font-style:italic;}
+
+  /* STAT ROW */
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:64px;}
+  @media(max-width:768px){.stat-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-card{
+    background:var(--s1);border:1px solid var(--border);border-radius:8px;
+    padding:24px 20px;text-align:center;
+  }
+  .stat-num{
+    font-family:'Instrument Serif',serif;font-size:clamp(32px,4vw,48px);
+    color:var(--amber);line-height:1;margin-bottom:8px;
+  }
+  .stat-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);}
+
+  /* FULL-WIDTH PANEL */
+  .full-panel{
+    background:var(--s1);border:1px solid var(--border);border-radius:10px;
+    padding:36px 40px;margin-bottom:32px;
+  }
+  .full-panel.amber-top{border-top:3px solid var(--amber);}
+  .full-panel.purple-top{border-top:3px solid var(--v);}
+  .full-panel.green-top{border-top:3px solid var(--green);}
+  .full-panel.cyan-top{border-top:3px solid var(--cyan);}
+  .panel-title{
+    font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--text3);margin-bottom:20px;
+  }
+  .bullet-list{list-style:none;padding:0;}
+  .bullet-list li{
+    font-size:13px;color:var(--text2);line-height:1.85;
+    padding:10px 0 10px 24px;border-bottom:1px solid var(--border);
+    position:relative;
+  }
+  .bullet-list li:last-child{border-bottom:none;}
+  .bullet-list li::before{
+    content:'▸';color:var(--amber);position:absolute;left:0;top:12px;font-size:10px;
+  }
+  .bullet-list li strong{color:var(--text);}
+
+  /* SITE GRID */
+  .site-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:32px;}
+  @media(max-width:900px){.site-grid{grid-template-columns:1fr;}}
+  .site-card{
+    background:var(--s2);border:1px solid var(--border);border-radius:8px;
+    padding:28px 24px;
+  }
+  .site-name{
+    font-family:'Instrument Serif',serif;font-size:18px;color:var(--amber);
+    margin-bottom:4px;
+  }
+  .site-freq{font-size:11px;color:var(--text3);letter-spacing:.08em;margin-bottom:18px;}
+  .site-item{
+    font-size:12px;color:var(--text2);line-height:1.8;
+    padding:7px 0 7px 18px;border-bottom:1px solid var(--border);
+    position:relative;
+  }
+  .site-item:last-child{border-bottom:none;}
+  .site-item::before{content:'→ ';color:var(--v);position:absolute;left:0;}
+
+  /* TWO-COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:32px;}
+  @media(max-width:768px){.two-col{grid-template-columns:1fr;}}
+
+  /* REASON BOX */
+  .reason-box{
+    background:var(--s1);border:1px solid var(--border);border-radius:10px;
+    padding:36px 40px;margin-bottom:64px;
+    border-left:4px solid var(--green);
+    background:radial-gradient(ellipse 60% 80% at 0% 50%, rgba(16,185,129,.04) 0%, transparent 70%);
+  }
+  .reason-box p{font-size:14px;color:var(--text2);line-height:1.9;}
+  .reason-box strong{color:var(--text);}
+
+  /* CTA */
+  .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .cta-btn{
+    display:inline-block;padding:14px 36px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    letter-spacing:.1em;text-transform:uppercase;
+    text-decoration:none;border-radius:6px;transition:all .2s;
+  }
+  .cta-primary{background:var(--amber);color:#000;box-shadow:0 0 24px rgba(245,158,11,.3);}
+  .cta-primary:hover{box-shadow:0 0 40px rgba(245,158,11,.6);}
+  .cta-secondary{background:transparent;color:var(--vl);border:1px solid var(--v);}
+  .cta-secondary:hover{background:rgba(139,92,246,.1);}
+
+  /* FOOTER */
+  footer{
+    border-top:1px solid var(--border);padding:28px 40px;
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:11px;color:var(--text3);
+  }
+  @media(max-width:600px){footer{flex-direction:column;gap:12px;text-align:center;}}
+
+  
+  
+
+  
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Ameera Shonese Bapoo</a>
+      <div class="nav-links">
+      <a class="nav-link" href="cover.html" style="color:#d4a017;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#b8860b;animation:navblink 1.1s ease-in-out infinite 0.00s;margin-right:4px;"></span>Cover</a>
+      <a class="nav-link" href="page2.html" style="color:#a78bfa;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#7c3aed;animation:navblink 1.1s ease-in-out infinite 0.18s;margin-right:4px;"></span>Portfolio</a>
+      <a class="nav-link" href="page1-web3-stance.html" style="color:#22d3ee;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#0891b2;animation:navblink 1.1s ease-in-out infinite 0.36s;margin-right:4px;"></span>Web3 Stance</a>
+      <a class="nav-link active" href="page5.html" style="color:#fbbf24;border-color:#d97706;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#d97706;animation:navblink 1.1s ease-in-out infinite 0.54s;margin-right:4px;"></span>Diesel & Oils</a>
+      <a class="nav-link" href="index.html" style="color:#e8b84b;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#c8942a;animation:navblink 1.1s ease-in-out infinite 0.72s;margin-right:4px;"></span>Blueprint</a>
+      <a class="nav-link" href="page3-final.html" style="color:#4ade80;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#16a34a;animation:navblink 1.1s ease-in-out infinite 0.90s;margin-right:4px;"></span>Ask Ameera</a>
+      <a class="nav-link" href="page4.html" style="color:#c084fc;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#9333ea;animation:navblink 1.1s ease-in-out infinite 1.08s;margin-right:4px;"></span>Founder Letter</a>
+      <a class="nav-link" href="page6.html" style="color:#22d3ee;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#0891b2;animation:navblink 1.1s ease-in-out infinite 1.26s;margin-right:4px;"></span>Why Interview</a>
+      <a class="nav-link" href="automations.html" style="color:#fbbf24;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#d97706;animation:navblink 1.1s ease-in-out infinite 1.44s;margin-right:4px;"></span>Solutions/Automations</a>
+      <a class="nav-link" href="page2.html#contact" style="color:#e8b84b;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#c8942a;animation:navblink 1.1s ease-in-out infinite 1.44s;margin-right:4px;"></span>Contact Ameera</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Deep-Dive Role Record · December 2016 – December 2025</div>
+    <h1 class="hero-title"><span class="blink-dot"></span>Head of Operations · Chief of Staff<br><em>Diesel &amp; Oils Tanker Transport</em></h1>
+    <div class="hero-meta">
+      <span class="hero-badge">9 Years · Sole Operator</span>
+      <span class="hero-badge green">Fleet: 200 Units</span>
+      <span class="hero-badge purple">3 Business Entities</span>
+      <span class="hero-badge">Transport · Fuel Distribution · Mining</span>
+    </div>
+    <p class="hero-desc">
+      Joined as the sole operational and executive support function for a single-entity road transport business with a small filling station. Over nine years, <strong>architected and implemented the full operational, compliance, financial, and people infrastructure</strong> that directly enabled the business to grow from one entity into three — expanding from a transport operation into a 200-unit tanker fleet, a fully compliant diesel depot, and an acquired manganese mining operation. Reported directly to the Founder throughout, serving simultaneously as Head of Operations, Chief of Staff, and Executive Office Manager across all three business entities.
+    </p>
+  </div>
+</div>
+
+<!-- JUMP TO NAVIGATION -->
+<div style="padding:32px 52px;background:rgba(245,158,11,0.06);border-top:1px solid rgba(245,158,11,0.2);border-bottom:1px solid rgba(245,158,11,0.2);">
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;max-width:900px;margin:0 auto;">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#666;margin-right:8px;">Jump to:</span>
+    <a href="#growth" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#f59e0b;text-decoration:none;padding:6px 12px;border:1px solid #f59e0b;border-radius:4px;transition:all 0.2s;animation:navblink 1.5s ease-in-out infinite;">Growth</a>
+    <a href="#systems" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#f59e0b;text-decoration:none;padding:6px 12px;border:1px solid #f59e0b;border-radius:4px;transition:all 0.2s;animation:navblink 1.5s ease-in-out infinite;animation-delay:0.2s;">Systems</a>
+    <a href="#operations" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#f59e0b;text-decoration:none;padding:6px 12px;border:1px solid #f59e0b;border-radius:4px;transition:all 0.2s;animation:navblink 1.5s ease-in-out infinite;animation-delay:0.4s;">Operations</a>
+    <a href="#executive" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#f59e0b;text-decoration:none;padding:6px 12px;border:1px solid #f59e0b;border-radius:4px;transition:all 0.2s;animation:navblink 1.5s ease-in-out infinite;animation-delay:0.6s;">Executive</a>
+    <a href="#legal" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#f59e0b;text-decoration:none;padding:6px 12px;border:1px solid #f59e0b;border-radius:4px;transition:all 0.2s;animation:navblink 1.5s ease-in-out infinite;animation-delay:0.8s;">Legal</a>
+    <a href="#hr" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#f59e0b;text-decoration:none;padding:6px 12px;border:1px solid #f59e0b;border-radius:4px;transition:all 0.2s;animation:navblink 1.5s ease-in-out infinite;animation-delay:1.0s;">HR</a>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- STATS -->
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">9</div>
+      <div class="stat-label">Years · Sole Operator</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">200</div>
+      <div class="stat-label">Tanker Fleet Units</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Concurrent Business Entities</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Pricing Audit Failures</div>
+    </div>
+  </div>
+
+  <div id="growth"></div><!-- BUSINESS GROWTH -->
+  <div class="sh"><span class="shn">01</span><h2 class="sht">Business Growth &amp; <em>Operational Transformation</em></h2></div>
+  <div class="full-panel amber-top" style="margin-bottom:64px;">
+    <ul class="bullet-list">
+      <li>Joined a single transport business with a small filling station and no formalised operational systems, compliance frameworks, or performance management infrastructure in place.</li>
+      <li>Designed and implemented <strong>Invesstock Managed Solutions</strong> — a proprietary, in-house operational management system built from scratch to integrate and oversee all three business entities within a single operational framework, covering fleet, depot, and mine operations concurrently.</li>
+      <li>The introduction of structured KPI frameworks, compliance programmes, and the Invesstock Managed Solutions system directly contributed to measurable business growth: the filling station scaled into a fully compliant diesel depot, the manganese mine was subsequently acquired, the tanker fleet doubled to 200 units, and overall business turnover increased significantly across the tenure period.</li>
+      <li>Driver attrition reduced materially following implementation of structured induction programmes, driver training initiatives, and performance management frameworks.</li>
+      <li>Mine safety incidents maintained a <strong>near-zero scoring record</strong> throughout the full operational period — reflecting the effectiveness of hazard management, inspection, and audit systems implemented.</li>
+      <li>Diesel pricing compliance and cost index alignment maintained continuously, with <strong>zero pricing audit failures</strong> recorded across the depot's COD sales model.</li>
+    </ul>
+  </div>
+
+  <div id="systems"></div><!-- SYSTEMS & COMPLIANCE -->
+  <div class="sh"><span class="shn">02</span><h2 class="sht">Systems, Technology &amp; <em>Compliance Infrastructure</em></h2></div>
+  <div class="full-panel purple-top" style="margin-bottom:64px;">
+    <ul class="bullet-list">
+      <li>Designed and built <strong>Invesstock Managed Solutions</strong> from the ground up — a bespoke in-house operational management system integrating oversight across all three business entities without reliance on external consultants or off-the-shelf frameworks.</li>
+      <li>Developed a proprietary internal audit and compliance management system incorporating weekly operational checks across all three sites — proactively surfacing gaps, assigning corrective actions, and maintaining continuous audit-readiness at all times.</li>
+      <li>Designed and implemented a KPI monitoring programme across all operational sites — tracking performance metrics, identifying variances, and generating structured performance reporting for the Director at every month-end cycle.</li>
+      <li>Administered all financial management and accounting through <strong>Xero</strong> — covering invoicing, reconciliations, financial reporting, and month-end close processes across the full business.</li>
+      <li>Managed two distinct month-end billing cycles for the tanker fleet operation — auditing and signing off all cycle statements and ensuring financial reporting was accurate and board-ready.</li>
+    </ul>
+  </div>
+
+  <div id="operations"></div><!-- THREE-SITE MONTHLY CADENCE -->
+  <div class="sh"><span class="shn">03</span><h2 class="sht">Operational Management — <em>Three-Site Monthly Cadence</em></h2></div>
+  <div class="site-grid" style="margin-bottom:64px;">
+    <div class="site-card">
+      <div class="site-name">Manganese Mine</div>
+      <div class="site-freq">6 Days Per Month · Bi-Monthly Cycle</div>
+      <div class="site-item">Accompanied Founder on bi-monthly site visits to maintain operational visibility and ensure on-the-ground performance aligned with business objectives.</div>
+      <div class="site-item">Conducted monthly fire drills, generating full compliance documentation and audit trails in accordance with regulatory requirements.</div>
+      <div class="site-item">Performed physical mine safety and hazard inspections — identifying risks, issuing corrective action directives, and ensuring all SHEQ obligations were met.</div>
+      <div class="site-item">Executed physical inventory inspections and reconciled findings against recorded stock levels.</div>
+      <div class="site-item">Chaired staff meetings, formally tabling new operational agenda items and closing outstanding action items from the prior cycle.</div>
+    </div>
+    <div class="site-card">
+      <div class="site-name">Diesel Depot</div>
+      <div class="site-freq">4 Days Per Month · Bi-Monthly Cycle</div>
+      <div class="site-item">Conducted physical site inspections of all pump infrastructure, safety equipment, and depot compliance documentation.</div>
+      <div class="site-item">Maintained strict oversight of the diesel pricing index — auditing all price adjustments against the fluctuating market index and ensuring all transactions were correctly processed on a COD basis.</div>
+      <div class="site-item">Executed monthly fire drills and maintained full compliance and audit trail records.</div>
+      <div class="site-item">Chaired staff meetings, managing action registers and tabling new operational priorities.</div>
+    </div>
+    <div class="site-card">
+      <div class="site-name">Fleet &amp; Head Office</div>
+      <div class="site-freq">6 Days Per Month · Bi-Monthly Cycle</div>
+      <div class="site-item">Oversaw 200-unit tanker fleet inspections — reviewing and signing off all service records, maintenance schedules, and roadworthiness documentation.</div>
+      <div class="site-item">Managed PPE procurement and distribution compliance across all drivers and workshop staff.</div>
+      <div class="site-item">Executed fire drills, maintained compliance documentation, and signed off all administrative paperwork and operational records.</div>
+      <div class="site-item">Chaired staff meetings and managed formal action registers across all open items.</div>
+    </div>
+  </div>
+
+  <div id="executive"></div><!-- EXECUTIVE OFFICE -->
+  <div class="sh"><span class="shn">04</span><h2 class="sht">Executive Office &amp; <em>Chief of Staff Functions</em></h2></div>
+  <div class="full-panel green-top" style="margin-bottom:64px;">
+    <ul class="bullet-list">
+      <li>Served as the Founder's primary operational delegate and executive gatekeeper — <strong>translating strategic direction into executable plans</strong> and maintaining full operational integrity across the business in the Founder's absence.</li>
+      <li>Compiled and presented monthly operational performance reports to the Director incorporating variance analysis, risk flags, and recommended corrective actions across all three entities — providing a complete, data-driven view of business performance at every cycle.</li>
+      <li>Served as the central organisational coordination point across all three business entities — ensuring consistent information flow, cross-site alignment, and accountability between the mine, depot, and fleet teams and the executive, without a formal management hierarchy beneath the Founder.</li>
+      <li>Managed the Founder's schedule, priorities, board communications, and executive correspondence — attending and minuting all board and executive meetings and managing all follow-through on decisions made.</li>
+      <li>Held weekly off-site strategic sessions with the Founder — contributing to business development, operational planning, and growth strategy across the full tenure period.</li>
+      <li>Handled commercially sensitive information, legal matters, and compliance documentation with full discretion and confidentiality — managing the intersection of legal, operational, and compliance risk across all three entities with complete integrity.</li>
+    </ul>
+  </div>
+
+  <div id="legal"></div><!-- LEGAL DOCUMENTATION -->
+  <div class="sh"><span class="shn">05</span><h2 class="sht">Legal Documentation, Investigations &amp; <em>Case Preparation</em></h2></div>
+  <div class="full-panel cyan-top" style="margin-bottom:64px;">
+    <ul class="bullet-list">
+      <li>Managed end-to-end preparation and organisation of legal documentation across all three businesses — including formal rebuttals, dispute responses, investigative reports, and court preparation materials — ensuring all submissions met professional, factual, and regulatory standards.</li>
+      <li>Compiled comprehensive structured case files for dispute resolution and litigation support, incorporating supporting documentation, chronological timelines, evidence records, and correspondence trails — enabling legal counsel to engage with fully prepared, audit-ready materials from the outset.</li>
+      <li>Conducted insurance-related investigations independently — gathering and verifying witness statements, incident reports, and operational records for claims assessment and liability analysis.</li>
+      <li>Drafted formal written responses to operational and contractual disputes on behalf of the business, applying regulatory awareness, factual rigour, and executive-level communication standards throughout.</li>
+      <li>Functioned as the primary interface between the business and its legal advisors across all active matters — covering CCMA proceedings, commercial disputes, insurance claims, and compliance investigations.</li>
+    </ul>
+  </div>
+
+  <div id="hr"></div><!-- HR & PEOPLE -->
+  <div class="sh"><span class="shn">06</span><h2 class="sht">Human Resources &amp; <em>People Management</em></h2></div>
+  <div class="full-panel" style="border-top:3px solid var(--vl);margin-bottom:64px;">
+    <ul class="bullet-list">
+      <li>Owned full HR infrastructure independently — payroll administration, employment contracts, disciplinary procedures, CCMA representation, leave management, and all labour disputes.</li>
+      <li>Implemented structured driver induction, training, and safety programmes that measurably reduced driver attrition and improved safety and performance KPIs across the fleet operation.</li>
+      <li>Managed PPE supply, workforce compliance, and performance management across drivers, depot staff, and mine workers simultaneously.</li>
+    </ul>
+  </div>
+
+  <!-- REASON FOR TRANSITION -->
+  <div class="sh"><span class="shn">07</span><h2 class="sht">Reason for <em>Transition</em></h2></div>
+  <div class="reason-box">
+    <p>Following nine years of building and scaling a multi-site operational infrastructure from the ground up, a deliberate decision was made to return to a remote-first working environment — which represents the majority of Ameera's earlier career and the environment in which she performs at her highest level. <strong>A structured three-month handover was completed with her successor prior to departure.</strong> Available for new remote employment immediately.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-row">
+    <a class="cta-btn cta-primary" href="page2.html">← Back to Portfolio</a>
+    <a class="cta-btn cta-secondary" href="page3-final.html">Ask Ameera a Question</a>
+    <a class="cta-btn cta-secondary" href="mailto:amyxai@proton.me">Contact Directly</a>
+  </div>
+
+</div>
+
+<footer>
+  <span>Ameera Shonese Bapoo · amyxai@proton.me · +27 72 580 7939</span>
+  <span>Head of Operations · Chief of Staff · Diesel &amp; Oils Tanker Transpo
+  
+  
+
+  
+  
+
+
+  
+  
+
+
+  
+  
+  
+  .section-nav a:hover { background
+
+<script>
+  const SEGMENTS = [
+    { text: "Welcome to the deep-dive of my nine-year operational record.", audio: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/p5_unified_a42a329f.wav" },
+  ];
+  let currentSegment = 0;
+  let audio = new Audio(SEGMENTS[currentSegment].audio);
+  let isPlaying = false;
+  let isMuted = false;
+
+  const narratorBar = document.getElementById("narrator-bar");
+  const playPauseBtn = document.getElementById("n-play-pause");
+  const playIcon = document.getElementById("play-icon");
+  const muteBtn = document.getElementById("n-mute");
+  const caption = document.getElementById("n-caption");
+  const progressFill = document.getElementById("n-progress");
+  const segLabel = document.getElementById("n-seg-label");
+
+  function updateNarratorUI() {
+    caption.textContent = SEGMENTS[currentSegment].text;
+    segLabel.textContent = `Segment ${currentSegment + 1} of ${SEGMENTS.length} — Diesel & Oils Record`;
+    if (isPlaying) {
+      narratorBar.classList.add("playing");
+      playIcon.textContent = "⏸";
+    } else {
+      narratorBar.classList.remove("playing");
+      playIcon.textContent = "▶";
+    }
+    muteBtn.textContent = isMuted ? "🔇 UNMUTE" : "🔊 SILENCE AI";
+  }
+
+  function togglePlayPause() {
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    isPlaying = !isPlaying;
+    updateNarratorUI();
+  }
+
+  function toggleMute() {
+    audio.muted = !audio.muted;
+    isMuted = !isMuted;n    updateNarratorUI();
+  }
+
+  audio.addEventListener("timeupdate", () => {
+    const progress = (audio.currentTime / audio.duration) * 100;
+    progressFill.style.width = `${progress}%`;
+  });
+
+  audio.addEventListener("ended", () => {
+    isPlaying = false;
+    progressFill.style.width = "0%";
+    updateNarratorUI();
+  });
+
+  playPauseBtn.addEventListener("click", togglePlayPause);
+  muteBtn.addEventListener("click", toggleMute);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    updateNarratorUI();
+    setTimeout(() => {
+      narratorBar.classList.remove("hidden");
+    }, 1000);
+  });
+</script>
+<div class="narrator-bar hidden" id="narrator-bar">
+  <div class="narrator-inner">
+    <div class="narrator-av-wrap" id="n-play-pause">
+      <div class="narrator-av-ring"></div>
+      <img src="assets/avatar.jpg" class="narrator-av" alt="Ameera">
+      <div class="narrator-play-overlay">
+        <span id="play-icon">▶</span>
+      </div>
+    </div>
+    <div class="narrator-info">
+      <div class="narrator-meta">
+        <span id="n-seg-label">Segment 1 of 1 — Diesel & Oils Record</span>
+        <div class="waveform">
+          <div class="waveform-bar"></div><div class="waveform-bar"></div><div class="waveform-bar"></div><div class="waveform-bar"></div><div class="waveform-bar"></div>
+        </div>
+      </div>
+      <div class="narrator-caption" id="n-caption">"Welcome to the deep-dive of my nine-year operational record."</div>
+      <div class="narrator-progress-bg">
+        <div class="narrator-progress-fill" id="n-progress"></div>
+      </div>
+    </div>
+    <div class="narrator-controls">
+      <button class="n-btn" id="n-mute" title="Mute/Unmute">🔊 SILENCE AI</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .narrator-bar{position:fixed;bottom:0;left:0;right:0;height:72px;background:rgba(10,10,15,0.95);backdrop-filter:blur(16px);border-top:1px solid rgba(139,92,246,0.3);display:flex;align-items:center;padding:0 40px;z-index:1000;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);box-shadow:0 -10px 40px rgba(0,0,0,0.5);}
+  .narrator-bar.hidden{transform:translateY(100%);}
+  .narrator-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;gap:20px;}
+  .narrator-av-wrap{position:relative;width:48px;height:48px;cursor:pointer;flex-shrink:0;}
+  .narrator-av{width:100%;height:100%;border-radius:50%;border:2px solid var(--v);object-fit:cover;object-position:top;}
+  .narrator-av-ring{position:absolute;inset:-4px;border:1px solid var(--v);border-radius:50%;opacity:0;transition:opacity 0.3s;}
+  .narrator-play-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;opacity:1;transition:opacity 0.2s;}
+  .narrator-bar.playing .narrator-play-overlay{opacity:0;}
+  .narrator-info{flex:1;min-width:0;}
+  .narrator-meta{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
+  #n-seg-label{font-family:'Space Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--vl);}
+  .waveform{display:flex;align-items:center;gap:2px;height:10px;}
+  .waveform-bar{width:2px;height:4px;background:var(--v);border-radius:1px;}
+  .narrator-caption{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px;}
+  .narrator-progress-bg{height:2px;background:rgba(255,255,255,0.1);border-radius:1px;overflow:hidden;}
+  .narrator-progress-fill{height:100%;width:0%;background:var(--v);transition:width 0.1s linear;}
+  .n-btn{background:rgba(244,63,94,0.1);border:1px solid #f43f5e;color:#f87171;font-family:'Space Mono',monospace;font-size:8px;padding:6px 12px;border-radius:4px;cursor:pointer;transition:all 0.2s;letter-spacing:0.05em;}
+  .n-btn:hover{background:rgba(244,63,94,0.2);}
+  .n-btn.muted{background:rgba(16,185,129,0.1);border-color:#10b981;color:#10b981;}
+  
+  @keyframes narrator-pulse{0%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.2);opacity:0;}100%{transform:scale(1);opacity:0;}}
+  @keyframes waveform-anim{from{height:2px;}to{height:10px;}}
+  .narrator-bar.playing .narrator-av{box-shadow:0 0 15px var(--v);border-color:var(--vl);}
+  .narrator-bar.playing .narrator-av-ring{animation:narrator-pulse 2s infinite;opacity:0.6;}
+  .narrator-bar.playing .waveform-bar{animation:waveform-anim 0.6s ease-in-out infinite alternate;}
+  .narrator-bar.playing .waveform-bar:nth-child(2){animation-delay:0.1s;}
+  .narrator-bar.playing .waveform-bar:nth-child(3){animation-delay:0.2s;}
+  .narrator-bar.playing .waveform-bar:nth-child(4){animation-delay:0.3s;}
+  .narrator-bar.playing .waveform-bar:nth-child(5){animation-delay:0.4s;}
+
+  
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+
+</style>
+
+<script>
+  const SEGMENTS = [{"id": "intro", "label": "Diesel & Oils Record", "file": "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/p5_unified_a42a329f.wav", "caption": "Welcome to the deep-dive of my nine-year operational record."}];
+  let currentSeg = 0;
+  let audio = new Audio();
+  let isPlaying = false;
+  let isMuted = false;
+  const bar = document.getElementById('narrator-bar');
+  const playBtn = document.getElementById('n-play-pause');
+  const muteBtn = document.getElementById('n-mute');
+  const progress = document.getElementById('n-progress');
+  const segLabel = document.getElementById('n-seg-label');
+  const caption = document.getElementById('n-caption');
+  const playIcon = document.getElementById('play-icon');
+
+  function initAudio() {
+    audio.src = SEGMENTS[currentSeg].file;
+    audio.onended = nextSegment;
+    audio.ontimeupdate = updateProgress;
+  }
+  function togglePlay() {
+    if(isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      bar.classList.remove('playing');
+      playIcon.textContent = '▶';
+    } else {
+      if(!audio.src) initAudio();
+      audio.play();
+      isPlaying = true;
+      bar.classList.add('playing');
+      playIcon.textContent = 'II';
+    }
+  }
+  function nextSegment() {
+    currentSeg++;
+    if(currentSeg < SEGMENTS.length) {
+      audio.src = SEGMENTS[currentSeg].file;
+      segLabel.textContent = `Segment ${currentSeg + 1} of ${SEGMENTS.length} — ${SEGMENTS[currentSeg].label}`;
+      caption.textContent = `"${SEGMENTS[currentSeg].caption}"`;
+      audio.play();
+    } else {
+      isPlaying = false;
+      currentSeg = 0;
+      bar.classList.remove('playing');
+      playIcon.textContent = '▶';
+      progress.style.width = '0%';
+    }
+  }
+  function updateProgress() {
+    const p = (audio.currentTime / audio.duration) * 100;
+    progress.style.width = p + '%';
+  }
+  playBtn.onclick = togglePlay;
+  muteBtn.onclick = () => {
+    isMuted = !isMuted;
+    audio.muted = isMuted;
+    muteBtn.classList.toggle('muted', isMuted);
+    muteBtn.textContent = isMuted ? '🔊 UNMUTE' : '🔊 SILENCE AI';
+  };
+  // Initialize audio on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    initAudio();
+    setTimeout(() => bar.classList.remove('hidden'), 500);
+  });
+  // Fallback for if DOMContentLoaded already fired
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initAudio();
+      setTimeout(() => bar.classList.remove('hidden'), 500);
+    });
+  } else {
+    initAudio();
+    setTimeout(() => bar.classList.remove('hidden'), 500);
+  }
+</script>
+
+
+    <div style="text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 60px; color: rgba(255,255,255,0.6); font-size: 14px;">
+      <p>© 2026 Ameera Shonese Bapoo. All rights reserved.<br>
+      Visit <a href="https://www.ibmai.dev" style="color: inherit; text-decoration: none; border-bottom: 1px solid currentColor;">www.ibmai.dev</a> for more information</p>
+    </div>
+
+</body>
+</html>

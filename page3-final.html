@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ask Ameera — AI Q&A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+@keyframes navblink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.15;transform:scale(.7);}}
+.nav-blink{animation:navblink 1.4s ease-in-out infinite;}
+.nav-blink-p2{animation:navblink 1.4s ease-in-out infinite .35s;}
+.nav-blink-p3{animation:navblink 1.4s ease-in-out infinite .7s;}
+:root {
+  --navy:       #07070f;
+  --navy2:      #0d0d1a;
+  --navy3:      #111128;
+  --amber:      #c8942a;
+  --amber-light:#f0c060;
+  --green:      #4ade80;
+  --green-dim:  rgba(74,222,128,0.15);
+  --purple:     #7c3aed;
+  --border:     rgba(255,255,255,0.07);
+  --border-hi:  rgba(200,148,42,0.3);
+  --text:       rgba(255,255,255,0.88);
+  --text-dim:   rgba(255,255,255,0.45);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--navy);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+}
+
+/* ── PAGE NAV ── */
+#page-nav{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  height:36px;
+  background:rgba(7,7,15,0.97);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(200,148,42,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;
+  flex-shrink:0;
+}
+.nav-link{
+  display:flex;align-items:center;gap:7px;
+  padding:0 18px;height:100%;
+  color:rgba(255,255,255,.4);
+  text-decoration:none;text-transform:uppercase;
+  transition:color .2s;
+  border-right:1px solid rgba(255,255,255,.06);
+}
+.nav-link:last-child{border-right:none;}
+.nav-link:hover{color:rgba(255,255,255,.85);}
+.nav-link.active-p3{color:var(--green);background:rgba(74,222,128,.08);}
+.nav-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0;}
+.nd-green{background:rgba(74,222,128,.8);}
+
+/* ── MAIN LAYOUT ── */
+#qa-page{
+  display:flex;
+  flex:1;
+  overflow:hidden;
+  margin-top:36px;
+  height:calc(100vh - 36px);
+}
+
+/* ── LEFT PANEL ── */
+#qa-left{
+  width:280px;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;
+  padding:32px 20px 24px;
+  border-right:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(13,13,26,0.8) 0%, rgba(7,7,15,0.9) 100%);
+  overflow-y:auto;
+}
+.av-orb-wrap{position:relative;width:140px;height:140px;margin-bottom:16px;flex-shrink:0;}
+.av-orb-ring{
+  position:absolute;inset:-8px;
+  border-radius:50%;
+  border:2px solid var(--amber);
+  opacity:.6;
+  animation:ring-pulse 3s ease-in-out infinite;
+}
+.av-orb-ring2{
+  position:absolute;inset:-16px;
+  border-radius:50%;
+  border:1px solid rgba(200,148,42,.25);
+  animation:ring-pulse 3s ease-in-out infinite .8s;
+}
+@keyframes ring-pulse{0%,100%{opacity:.6;transform:scale(1);}50%{opacity:.2;transform:scale(1.04);}}
+.av-orb-img{
+  width:140px;height:140px;
+  border-radius:50%;
+  object-fit:cover;object-position:center;
+  border:3px solid var(--amber);
+  display:block;
+  background:#1a1a1f;
+  font-size:3rem;
+  transform:rotate(20deg);
+}
+#av-waveform{
+  display:flex;align-items:flex-end;gap:3px;height:24px;margin:10px 0 8px;
+}
+#av-waveform span{
+  width:3px;border-radius:2px;background:var(--amber);
+  animation:wave 1.2s ease-in-out infinite;
+  opacity:.3;
+}
+#av-waveform.speaking span{opacity:1;}
+#av-waveform span:nth-child(1){animation-delay:0s;}
+#av-waveform span:nth-child(2){animation-delay:.15s;}
+#av-waveform span:nth-child(3){animation-delay:.3s;}
+#av-waveform span:nth-child(4){animation-delay:.45s;}
+#av-waveform span:nth-child(5){animation-delay:.6s;}
+@keyframes wave{0%,100%{height:4px;}50%{height:20px;}}
+#av-caption{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:11px;
+  color:var(--text-dim);
+  text-align:center;
+  line-height:1.5;
+  margin-bottom:12px;
+  min-height:32px;
+}
+.mode-badge{
+  font-family:'Space Mono',monospace;
+  font-size:7px;letter-spacing:.1em;
+  padding:4px 10px;border-radius:3px;
+  border:1px solid rgba(255,255,255,.12);
+  color:var(--text-dim);
+  margin-bottom:16px;
+}
+.mode-badge.listening{border-color:var(--green);color:var(--green);}
+.mode-badge.speaking{border-color:var(--amber);color:var(--amber-light);}
+
+/* voice bar */
+#voice-bar{
+  width:100%;
+  display:flex;flex-direction:column;gap:6px;
+  margin-bottom:12px;
+}
+#mute-btn{
+  width:100%;
+  font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.08em;
+  padding:8px 10px;border-radius:5px;
+  border:1px solid var(--amber);
+  background:rgba(200,148,42,.1);
+  color:var(--amber-light);
+  cursor:pointer;transition:all .2s;
+}
+#mute-btn:hover{background:rgba(200,148,42,.2);}
+#mute-btn.muted{border-color:#ef4444;background:rgba(239,68,68,.1);color:#fca5a5;}
+#mute-btn.muted:hover{background:rgba(239,68,68,.2);}
+
+/* info block */
+.qa-info{
+  width:100%;
+  border-top:1px solid var(--border);
+  padding-top:14px;
+  margin-top:4px;
+}
+.qa-info-row{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:8px;margin-bottom:7px;
+  font-size:8px;
+}
+.qi-key{
+  font-family:'Space Mono',monospace;
+  color:var(--text-dim);letter-spacing:.06em;
+  flex-shrink:0;
+}
+.qi-val{color:var(--text);font-size:8.5px;text-align:right;}
+.qi-val a{color:var(--amber-light);text-decoration:none;}
+.qi-val a:hover{text-decoration:underline;}
+
+/* ── RIGHT PANEL ── */
+#qa-right{
+  flex:1;min-width:0;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+
+/* ── TOP QUESTIONS PANEL ── */
+#qa-bottom{
+  flex-shrink:0;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,7,15,.95);
+  padding:12px 20px 16px;
+  display:flex;flex-direction:column;gap:10px;
+  order:-1;
+  max-height:200px;
+  overflow-y:auto;
+}
+.qa-bottom-label{
+  font-family:'Space Mono',monospace;
+  font-size:6.5px;letter-spacing:.14em;
+  color:rgba(200,148,42,.5);
+  text-transform:uppercase;
+}
+#qa-question-list{
+  display:flex;flex-wrap:wrap;gap:6px;
+  overflow-y:auto;
+  max-height:160px;
+  padding-right:4px;
+}
+#qa-question-list::-webkit-scrollbar{width:3px;}
+#qa-question-list::-webkit-scrollbar-thumb{background:rgba(200,148,42,.25);border-radius:2px;}
+.qa-q{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:20px;
+  padding:6px 13px;
+  color:rgba(255,255,255,.7);
+  font-family:'DM Sans',sans-serif;font-size:8.5px;
+  cursor:pointer;transition:all .18s;
+  white-space:nowrap;
+}
+.qa-q:hover{
+  background:rgba(200,148,42,.12);
+  border-color:var(--amber);
+  color:var(--amber-light);
+}
+.qa-q.asked{opacity:.3;pointer-events:none;}
+
+/* ── MESSAGES AREA ── */
+#qa-messages{
+  flex:1;min-height:0;
+  overflow-y:auto;
+  padding:20px 24px;
+  display:flex;flex-direction:column;gap:14px;
+  scroll-behavior:smooth;
+}
+#qa-messages::-webkit-scrollbar{width:4px;}
+#qa-messages::-webkit-scrollbar-thumb{background:rgba(200,148,42,.25);border-radius:2px;}
+
+.msg-row{display:flex;gap:10px;align-items:flex-start;}
+.msg-row.user{flex-direction:row-reverse;}
+.msg-av{
+  width:34px;height:34px;flex-shrink:0;
+  border-radius:50%;overflow:hidden;
+  border:2px solid var(--amber);
+  background:#1a1a1f;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.2rem;
+}
+.msg-av img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+.msg-av.user-av{
+  background:rgba(200,148,42,.2);
+  border-color:rgba(200,148,42,.4);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:8px;color:var(--amber-light);
+}
+.msg-bubble{
+  max-width:72%;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;
+  padding:11px 14px;
+  font-size:9px;line-height:1.65;
+  color:var(--text);
+}
+.msg-row.user .msg-bubble{
+  background:rgba(200,148,42,.1);
+  border-color:rgba(200,148,42,.2);
+  color:var(--amber-light);
+  text-align:right;
+}
+
+/* ── WELCOME CARD ── */
+.welcome-card{
+  background:rgba(200,148,42,.06);
+  border:1px solid rgba(200,148,42,.15);
+  border-radius:10px;
+  padding:18px 20px;
+  font-size:9px;line-height:1.7;
+  color:var(--text-dim);
+  max-width:600px;
+}
+.welcome-card strong{color:var(--amber-light);}
+
+/* ── MOBILE ── */
+@media(max-width:680px){
+  #qa-left{
+    width:100%;flex-direction:row;
+    padding:10px 14px;
+    border-right:none;border-bottom:1px solid var(--border);
+    gap:12px;align-items:center;
+    flex-shrink:0;
+    overflow:visible;
+  }
+  .av-orb-wrap{width:52px;height:52px;margin-bottom:0;}
+  .av-orb-img{width:52px;height:52px;transform:rotate(20deg);}
+  .av-orb-ring{inset:-4px;}
+  .av-orb-ring2{inset:-8px;}
+  #av-waveform{height:16px;margin:0;}
+  #av-caption{font-size:9px;text-align:left;min-height:auto;}
+  .mode-badge{display:none;}
+  .qa-info{display:none;}
+  #voice-bar{width:auto;flex-direction:row;margin-bottom:0;}
+  #mute-btn{padding:5px 8px;font-size:6.5px;}
+  #qa-bottom{padding:10px 14px;max-height:120px;}
+  #qa-question-list{max-height:100px;gap:4px;}
+  .qa-q{padding:5px 10px;font-size:7.5px;}
+  .msg-bubble{max-width:85%;font-size:8px;}
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE NAV -->
+<nav id="page-nav">
+  <a href="cover.html" class="nav-link">
+    <span class="nav-dot nd-amber"></span> Cover
+  </a>
+  <a href="page1-web3-stance.html" class="nav-link">
+    <span class="nav-dot nd-amber"></span> Web3 Stance
+  </a>
+  <a href="cover.html" class="nav-link">
+    <span class="nav-dot nd-amber"></span> PAGE 1 — BLUEPRINT
+  </a>
+  <a href="page2.html" class="nav-link">
+    <span class="nav-dot nd-purple"></span> PAGE 2 — PORTFOLIO
+  </a>
+  <a href="page3-final.html" class="nav-link active-p3">
+    <span class="nav-dot nd-green"></span> PAGE 3 — ASK AMEERA
+  </a>
+  <a href="page4.html" class="nav-link">
+    <span class="nav-dot nd-amber"></span> PAGE 4 — FOUNDER LETTER
+  </a>
+  <a href="page5.html" class="nav-link">
+    <span class="nav-dot nd-amber"></span> PAGE 5 — DIESEL & OILS
+  </a>
+  <a href="page6.html" class="nav-link">
+    <span class="nav-dot nd-amber"></span> PAGE 6 — WHY INTERVIEW AMEERA
+  </a>
+</nav>
+
+<!-- MAIN QA PAGE -->
+<div id="qa-page">
+  <!-- LEFT PANEL -->
+  <div id="qa-left">
+    <div class="av-orb-wrap">
+      <div class="av-orb-ring"></div>
+      <div class="av-orb-ring2"></div>
+      <img src="ameera-avatar.jpg" alt="Ameera" class="av-orb-img">
+    </div>
+    
+    <div id="av-waveform"></div>
+    <div id="av-caption">"Hello — tap a question to ask me anything."</div>
+    
+    <div class="mode-badge listening">Ready</div>
+    
+    <div id="voice-bar">
+      <button id="n-play-pause" style="width:100%;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.08em;padding:8px 10px;border-radius:5px;border:1px solid var(--amber);background:rgba(200,148,42,.1);color:var(--amber-light);cursor:pointer;transition:all .2s;">▶ Play</button>
+      <button id="mute-btn">🔊 MUTE</button>
+    </div>
+    
+    <div class="qa-info">
+      <div class="qa-info-row">
+        <span class="qi-key">STATUS</span>
+        <span class="qi-val">Available Immediately</span>
+      </div>
+      <div class="qa-info-row">
+        <span class="qi-key">CONTRACT</span>
+        <span class="qi-val">Flexible</span>
+      </div>
+      <div class="qa-info-row">
+        <span class="qi-key">LOCATION</span>
+        <span class="qi-val">Johannesburg, ZA · Remote-First</span>
+      </div>
+      <div class="qa-info-row">
+        <span class="qi-key">EMAIL</span>
+        <span class="qi-val"><a href="mailto:amyxai@proton.me">amyxai@proton.me</a></span>
+      </div>
+      <div class="qa-info-row">
+        <span class="qi-key">PHONE / WA</span>
+        <span class="qi-val"><a href="tel:+27725807939">+27 72 580 7939</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div id="qa-right">
+    <!-- QUESTIONS AT TOP -->
+    <div id="qa-bottom">
+      <div class="qa-bottom-label">Tap a question to ask Ameera</div>
+      <div id="qa-question-list">
+        <button class="qa-q" onclick="askQuestion('Is she available immediately?', 'Yes, I am available to start immediately. I have no notice period and can begin on your timeline.')">Is she available immediately?</button>
+        <button class="qa-q" onclick="askQuestion('Can she work remotely?', 'Yes, I work remotely from Johannesburg, South Africa. I am fully equipped for distributed work across all time zones.')">Can she work remotely?</button>
+        <button class="qa-q" onclick="askQuestion('What\'s her contract type?', 'I am flexible on contract type. I can work as a full-time employee, contractor, or on a project basis depending on your needs.')">What's her contract type?</button>
+        <button class="qa-q" onclick="askQuestion('What languages does she speak?', 'I speak English fluently and have conversational Afrikaans. I can communicate effectively in both languages.')">What languages does she speak?</button>
+        <button class="qa-q" onclick="askQuestion('What\'s her AI background?', 'I am an active AI founder and builder. I founded iBMit AI Now and have hands-on experience with LLMs, prompt engineering, and AI implementation.')">What's her AI background?</button>
+        <button class="qa-q" onclick="askQuestion('Does she have Web3 experience?', 'Yes, I am actively pursuing Web3 opportunities. I have strategic positioning at the intersection of fiat-to-crypto infrastructure and emerging markets crypto adoption.')">Does she have Web3 experience?</button>
+        <button class="qa-q" onclick="askQuestion('Tell me about the 3 businesses she\'s built', 'I have built three ventures: Lamptech, iBMit AI Now, and Invesstock Managed Solutions. Each represents different sectors - technology, AI, and operations infrastructure.')">Tell me about the 3 businesses she's built</button>
+        <button class="qa-q" onclick="askQuestion('Why Web3 specifically?', 'Web3 is to the global economy what Open Source was to programming - the shift from permissioned silos to borderless, collective innovation. I want to be part of that transformation.')">Why Web3 specifically?</button>
+        <button class="qa-q" onclick="askQuestion('What makes her unique?', 'My career has required me to be simultaneously a strategist, operator, people leader, and compliance authority - not in sequence, but all at once across nine years of real business growth.')">What makes her unique?</button>
+        <button class="qa-q" onclick="askQuestion('What\'s her Chief of Staff experience?', 'I spent nine years as the sole person a founder trusted completely across legal, compliance, finance, HR, and operational scale. That is lived experience of what a Chief of Staff role demands.')">What's her Chief of Staff experience?</button>
+        <button class="qa-q" onclick="askQuestion('Tell me about her IBM experience', 'At IBM, I managed workforce solutions and international account management across multiple regions. I handled complex multi-currency operations and strategic recruitment systems.')">Tell me about her IBM experience</button>
+        <button class="qa-q" onclick="askQuestion('Tell me about her Ericsson role', 'At Ericsson, I managed resources across SADC and ECOWAS regions with multi-currency operations. I handled strategic resource allocation and international operations.')">Tell me about her Ericsson role</button>
+        <button class="qa-q" onclick="askQuestion('Tell me about her Toyota experience', 'I participated in Toyota\'s graduate programme and executive cohort. I completed psychometric assessments and received formal training in operational excellence.')">Tell me about her Toyota experience</button>
+        <button class="qa-q" onclick="askQuestion('Tell me about the Aramex acquisition', 'I managed the integration of Berco into Aramex. I handled the merger logistics and ensured smooth operational transition across entities.')">Tell me about the Aramex acquisition</button>
+        <button class="qa-q" onclick="askQuestion('Tell me about the Coca-Cola call centre', 'I built a 100-seat call centre for Coca-Cola with radical inclusion principles. The centre focused on employing people with disabilities and creating meaningful work.')">Tell me about the Coca-Cola call centre</button>
+        <button class="qa-q" onclick="askQuestion('Tell me about her government work', 'I built a recruitment system for the Gauteng Social Services Centre from zero. I designed government-grade recruitment infrastructure and compliance systems.')">Tell me about her government work</button>
+        <button class="qa-q" onclick="askQuestion('What tools does she use?', 'I work with Zoom, Slack, Google Workspace, Outlook, Notion, Airtable, Zapier, and SAP. I am comfortable with modern tech stacks and learn new tools quickly.')">What tools does she use?</button>
+        <button class="qa-q" onclick="askQuestion('What\'s her compliance experience?', 'I have deep compliance experience across RTMS, KYC, AML, regulatory frameworks, audits, and SOX compliance. I managed legal and regulatory exposure in heavily regulated environments.')">What's her compliance experience?</button>
+        <button class="qa-q" onclick="askQuestion('What\'s her HR and recruitment background?', 'I designed and managed full-cycle recruitment, onboarding systems, performance review cycles, and talent pipeline management across multiple entities and roles.')">What's her HR and recruitment background?</button>
+        <button class="qa-q" onclick="askQuestion('What\'s her finance and P&L experience?', 'I managed P&L responsibility, budgeting, cost control, accounting systems, and financial infrastructure. I implemented Xero for financial management across entities.')">What's her finance and P&L experience?</button>
+        <button class="qa-q" onclick="askQuestion('What\'s her education background?', 'I hold a degree in Computer Science with COBOL specialization. I completed my education in Boston and have formal qualifications in information systems architecture.')">What's her education background?</button>
+        <button class="qa-q" onclick="askQuestion('Any gaps or risks?', 'My career has been broad rather than deep in any single domain. Some may see this as a gap, but I see it as the core strength for roles requiring cross-functional leadership.')">Any gaps or risks?</button>
+        <button class="qa-q" onclick="askQuestion('Can I verify her references?', 'Yes, I can provide references from founders, executives, and colleagues across all organizations I have worked with. I welcome thorough reference checks.')">Can I verify her references?</button>
+        <button class="qa-q" onclick="askQuestion('How do I schedule an interview?', 'You can reach me at amyxai@proton.me or +27 72 580 7939. I am available for calls, video interviews, or in-person meetings at your convenience.')">How do I schedule an interview?</button>
+        <button class="qa-q" onclick="askQuestion('How do I contact her?', 'Email: amyxai@proton.me | WhatsApp/Phone: +27 72 580 7939 | I respond within 24 hours. Feel free to reach out anytime.')">How do I contact her?</button>
+        <button class="qa-q" onclick="askQuestion('Why should Web3 take a chance on her?', 'Web3 needs operators who can build infrastructure that turns ambitious ideas into durable businesses. That is exactly what I do. I bring both strategic vision and operational execution.')">Why should Web3 take a chance on her?</button>
+        <button class="qa-q" onclick="askQuestion('What does she know about Web3\'s business?', 'I understand on-ramp/off-ramp mechanics, DeFi operations, and emerging markets crypto adoption. I have on-the-ground fluency in fast-moving, resource-constrained environments.')">What does she know about Web3's business?</button>
+      </div>
+    </div>
+
+    <!-- MESSAGES AREA -->
+    <div id="qa-messages">
+      <div class="welcome-card">
+        <strong>Hello — I'm Ameera Shonese Bapoo.</strong><br>
+        Operations Architect · Chief of Staff · AI Practitioner · 33 years across 7 organisations.<br><br>
+        I'm applying for the <strong>Founder Associate role. My keen interest is now in Web3 and to enter the Web3 environment.</strong> Tap any question above to hear my answer — I'll respond in text and voice. You can silence the voice at any time using the button on the left.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentAudio = null;
+let isMuted = false;
+let isPlaying = false;
+
+// Audio map for Q&A responses
+const AUDIO_MAP = [
+  { keys: ["available","immediately","start","notice","when","ready"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a01_vibrant_424efd0d.wav" },
+  { keys: ["remote","work from home","timezone","johannesburg","south africa","location","sast","distributed"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a02_vibrant_c0b4d93d.wav" },
+  { keys: ["contract","ftc","term","duration","permanent","extend"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a03_vibrant_6f657d36.wav" },
+  { keys: ["salary","compensation","rate","pay","cost","package","remuneration"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a04_vibrant_8c3f9e1a.wav" },
+  { keys: ["language","afrikaans","english","bilingual","speak"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a05_vibrant_5d075197.wav" },
+  { keys: ["ai","artificial intelligence","machine learning","llm","gpt","claude","agent","automation","voice ai","tts","ai background","ai experience","ai knowledge","ibmit"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a06_vibrant_cba9e5f9.wav" },
+  { keys: ["web3","blockchain","defi","nft","token","crypto","bnb","chain"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a07_vibrant_340d93bb.wav" },
+  { keys: ["3 businesses","three businesses","lamptech","ibmit","businesses built","founded"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a08_vibrant_0c2618cd.wav" },
+  { keys: ["web3","why web3","web3","fintech","why this company"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a09_vibrant_21d9cff2.wav" },
+  { keys: ["unique","stand out","why you","why ameera","best candidate","differentiator","special"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a10_vibrant_e6d7f234.wav" },
+  { keys: ["chief of staff","coo","right hand","operator","second in command","founder associate","executive assistant"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a11_vibrant_0354de00.wav" },
+  { keys: ["ibm","kelly","101","international","workforce","account manager","sandton"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a12_vibrant_f98726d8.wav" },
+  { keys: ["ericsson","585","resources","sadc","ecowas","multi-currency","ngn","zar","eur","usd","woodmead"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a13_vibrant_29084082.wav" },
+  { keys: ["toyota","graduate","programme","exco","university","psychometric"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a14_vibrant_5f980ed1.wav" },
+  { keys: ["aramex","berco","acquisition","integration","merger","logistics"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a15_vibrant_a7588a2b.wav" },
+  { keys: ["coca-cola","advy","call centre","inclusive","disability","100 seat","radical inclusion"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a16_vibrant_06d934e9.wav" },
+  { keys: ["legislature","government","gauteng","gssc","recruitment system","built from zero","government work"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a17_vibrant_b548afc3.wav" },
+  { keys: ["tools","zoom","slack","google workspace","outlook","notion","airtable","zapier","software","tech stack","sap"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a18_vibrant_bfd4c173.wav" },
+  { keys: ["compliance","rtms","kyc","aml","regulatory","audit","legal","sox","ee"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a19_vibrant_8f93a778.wav" },
+  { keys: ["hr","human resources","recruitment","talent","hiring","payroll","onboarding","targeted selection"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a20_vibrant_43d407b4.wav" },
+  { keys: ["finance","p&l","profit","loss","budget","cost","accounting","financial","debtors","creditors"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a21_vibrant_172f32d3.wav" },
+  { keys: ["education","degree","qualification","cobol","computer science","diploma","iisa","matric","boston"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a22_vibrant_9ce24f07.wav" },
+  { keys: ["weakness","gap","challenge","concern","risk","limitation","gaps"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a23_vibrant_4f739b88.wav" },
+  { keys: ["reference","referee","verify","background check","testimonial","references"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a24_vibrant_165f4c43.wav" },
+  { keys: ["interview","schedule","book","next step","meet","call","conversation"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a25_vibrant_f07ab58e.wav" },
+  { keys: ["contact","email","phone","reach","message","whatsapp","how to reach"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a26_vibrant_f36d0c5b.wav" },
+  { keys: ["chance","without crypto","no crypto","crypto employment","risk on her","bet on"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a27_vibrant_7680fa74.wav" },
+  { keys: ["web3 business","web3 model","web3 proposition","what is web3","know about web3","fiat to crypto"], src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/a28_vibrant_ad87c329.wav" },
+];
+
+function findAudioSrc(text) {
+  const lower = text.toLowerCase();
+  let best = null, bestScore = 0;
+  for (const item of AUDIO_MAP) {
+    let score = 0;
+    for (const k of item.keys) {
+      if (lower.includes(k)) score += k.length;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      best = item;
+    }
+  }
+  return (best && bestScore > 0) ? best.src : null;
+}
+
+function askQuestion(question, answer) {
+  // Add question to messages
+  const msgRow = document.createElement('div');
+  msgRow.className = 'msg-row user';
+  msgRow.innerHTML = `
+    <div class="msg-av user-av">YOU</div>
+    <div class="msg-bubble">${question}</div>
+  `;
+  document.getElementById('qa-messages').appendChild(msgRow);
+  
+  // Add answer to messages
+  const ansRow = document.createElement('div');
+  ansRow.className = 'msg-row';
+  ansRow.innerHTML = `
+    <div class="msg-av">👩</div>
+    <div class="msg-bubble">${answer}</div>
+  `;
+  document.getElementById('qa-messages').appendChild(ansRow);
+  
+  // Scroll to bottom
+  document.getElementById('qa-messages').scrollTop = document.getElementById('qa-messages').scrollHeight;
+  
+  // Update caption
+  document.getElementById('av-caption').textContent = question;
+  
+  // Stop current audio
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
+  
+  // Play audio
+  const audioSrc = findAudioSrc(question);
+  if (audioSrc && !isMuted) {
+    currentAudio = new Audio(audioSrc);
+    currentAudio.onplay = () => {
+      isPlaying = true;
+      document.getElementById('av-waveform').classList.add('speaking');
+      document.getElementById('n-play-pause').textContent = '⏸ Pause';
+    };
+    currentAudio.onended = () => {
+      isPlaying = false;
+      document.getElementById('av-waveform').classList.remove('speaking');
+      document.getElementById('n-play-pause').textContent = '▶ Play';
+    };
+    currentAudio.play().catch(err => console.log('Audio play failed:', err));
+  }
+}
+
+// Play/Pause button
+document.getElementById('n-play-pause').addEventListener('click', () => {
+  if (!currentAudio) return;
+  
+  if (isPlaying) {
+    currentAudio.pause();
+    isPlaying = false;
+    document.getElementById('n-play-pause').textContent = '▶ Play';
+    document.getElementById('av-waveform').classList.remove('speaking');
+  } else {
+    currentAudio.play();
+    isPlaying = true;
+    document.getElementById('n-play-pause').textContent = '⏸ Pause';
+    document.getElementById('av-waveform').classList.add('speaking');
+  }
+});
+
+// Mute button
+document.getElementById('mute-btn').addEventListener('click', () => {
+  isMuted = !isMuted;
+  document.getElementById('mute-btn').classList.toggle('muted');
+  if (currentAudio) {
+    currentAudio.muted = isMuted;
+  }
+});
+</script>
+
+
+    <div style="text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 60px; color: rgba(255,255,255,0.6); font-size: 14px;">
+      <p>© 2026 Ameera Shonese Bapoo. All rights reserved.<br>
+      Visit <a href="https://www.ibmai.dev" style="color: inherit; text-decoration: none; border-bottom: 1px solid currentColor;">www.ibmai.dev</a> for more information</p>
+    </div>
+
+</body>
+</html>

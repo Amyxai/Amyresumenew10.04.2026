@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Why Interview Ameera — Ameera Shonese Bapoo</title>
+      <a class="nav-link" href="automations.html" style="color:#fbbf24;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#d97706;animation:navblink 1.1s ease-in-out infinite 1.44s;margin-right:4px;"></span>Solutions/Automations</a>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#07070f;
+  --s1:#0c0c1a;
+  --s2:#10101e;
+  --amber:#c8942a;
+  --amber-light:#e8b84b;
+  --purple:#7c3aed;
+  --purple-light:#a78bfa;
+  --green:#4ade80;
+  --cyan:#06b6d4;
+  --text1:#e8e8f0;
+  --text2:#9898b0;
+  --border:rgba(200,148,42,0.15);
+}
+body{background:var(--bg);color:var(--text1);font-family:'Space Mono',monospace;min-height:100vh;overflow-x:hidden;}
+
+/* ── NAV ── */
+@keyframes navblink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.2;transform:scale(.65);}}
+#page-nav{
+  position:fixed;top:0;left:0;right:0;z-index:9998;
+  height:36px;background:rgba(7,7,15,0.97);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(200,148,42,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.12em;
+  flex-wrap:nowrap;overflow-x:auto;
+}
+.nav-link{
+  display:flex;align-items:center;gap:6px;
+  padding:0 14px;height:100%;
+  text-decoration:none;text-transform:uppercase;
+  transition:color .2s,background .2s;
+  border-left:1px solid rgba(255,255,255,.07);
+  white-space:nowrap;
+}
+.nav-link:first-child{border-left:none;}
+.nav-dot{width:6px;height:6px;border-radius:50%;display:inline-block;animation:navblink 1.2s ease-in-out infinite;}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:80px 40px 60px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(139,92,246,.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.25em;color:var(--amber);
+  text-transform:uppercase;margin-bottom:28px;
+  border:1px solid rgba(200,148,42,.3);
+  padding:6px 20px;border-radius:20px;
+  background:rgba(200,148,42,.06);
+  display:inline-block;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,6vw,80px);
+  font-weight:900;line-height:1.05;
+  margin-bottom:32px;
+}
+.hero-title em{color:var(--purple-light);font-style:italic;}
+.hero-sub{
+  font-size:14px;color:var(--text2);
+  max-width:640px;line-height:1.9;
+  margin:0 auto 48px;
+}
+.hero-sub strong{color:var(--text1);}
+.hero-divider{
+  width:80px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);
+  margin:0 auto;
+}
+
+/* ── SECTIONS ── */
+.case-wrap{max-width:900px;margin:0 auto;padding:0 40px 100px;}
+
+.case-block{
+  margin-bottom:72px;
+  padding:48px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  background:var(--s1);
+  position:relative;
+  overflow:hidden;
+}
+.case-block::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+}
+.case-block.amber::before{background:linear-gradient(90deg,transparent,var(--amber),transparent);}
+.case-block.purple::before{background:linear-gradient(90deg,transparent,var(--purple-light),transparent);}
+.case-block.cyan::before{background:linear-gradient(90deg,transparent,var(--cyan),transparent);}
+.case-block.green::before{background:linear-gradient(90deg,transparent,var(--green),transparent);}
+
+.case-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:16px;
+  opacity:.6;
+}
+.case-block.amber .case-label{color:var(--amber);}
+.case-block.purple .case-label{color:var(--purple-light);}
+.case-block.cyan .case-label{color:var(--cyan);}
+.case-block.green .case-label{color:var(--green);}
+
+.case-heading{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,3.5vw,34px);
+  font-weight:700;line-height:1.2;
+  margin-bottom:24px;
+  color:var(--text1);
+}
+.case-heading em{font-style:italic;}
+.case-body{
+  font-size:15px;line-height:1.95;
+  color:var(--text2);
+}
+.case-body strong{color:var(--text1);font-weight:700;}
+.case-body p{margin-bottom:16px;}
+.case-body p:last-child{margin-bottom:0;}
+
+/* ── STAT ROW ── */
+.stat-row{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:20px;margin-top:32px;
+}
+.stat-box{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:20px;text-align:center;
+}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:36px;font-weight:900;
+  color:var(--amber-light);
+  display:block;margin-bottom:6px;
+}
+.stat-lbl{font-size:10px;letter-spacing:.12em;color:var(--text2);text-transform:uppercase;}
+
+/* ── PULL QUOTE ── */
+.pull-quote{
+  margin:72px 0;
+  padding:48px 56px;
+  border-left:4px solid var(--purple-light);
+  background:rgba(139,92,246,.06);
+  border-radius:0 12px 12px 0;
+}
+.pull-quote blockquote{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(18px,2.5vw,26px);
+  font-style:italic;
+  line-height:1.6;
+  color:var(--text1);
+}
+.pull-quote cite{
+  display:block;margin-top:20px;
+  font-size:11px;letter-spacing:.15em;
+  color:var(--purple-light);text-transform:uppercase;
+}
+
+/* ── CLOSING CTA ── */
+.closing{
+  text-align:center;
+  padding:80px 40px;
+  background:var(--s1);
+  border-top:1px solid var(--border);
+}
+.closing-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(24px,4vw,48px);
+  font-weight:900;margin-bottom:20px;
+}
+.closing-title em{color:var(--amber-light);font-style:italic;}
+.closing-sub{
+  font-size:14px;color:var(--text2);
+  max-width:560px;margin:0 auto 40px;line-height:1.8;
+}
+.closing-phone{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:22px;font-weight:700;
+  color:var(--amber-light);
+  letter-spacing:.08em;
+  text-decoration:none;
+  border:2px solid var(--amber);
+  padding:16px 48px;border-radius:8px;
+  background:rgba(200,148,42,.08);
+  box-shadow:0 0 32px rgba(200,148,42,.25);
+  transition:box-shadow .2s,background .2s;
+}
+.closing-phone:hover{
+  box-shadow:0 0 60px rgba(200,148,42,.5);
+  background:rgba(200,148,42,.15);
+}
+
+/* ── MOST IMPORTANT ── */
+.most-important{
+  margin:72px 0;
+  padding:56px;
+  background:linear-gradient(135deg,rgba(139,92,246,.1),rgba(200,148,42,.08));
+  border:1px solid rgba(139,92,246,.3);
+  border-radius:16px;
+  text-align:center;
+}
+.mi-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:.25em;
+  color:var(--purple-light);text-transform:uppercase;
+  margin-bottom:20px;
+}
+.mi-text{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(16px,2.5vw,22px);
+  line-height:1.8;color:var(--text1);
+}
+.mi-text strong{color:var(--amber-light);}
+
+  @keyframes blink-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.8); } }
+  .blink-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--v, #8b5cf6); margin-right: 15px; vertical-align: middle; animation: blink-dot 1.5s ease-in-out infinite; box-shadow: 0 0 10px var(--v, #8b5cf6); }
+
+  @keyframes section-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .section-nav { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 30px 0; padding: 20px; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 8px; background: rgba(6, 182, 212, 0.05); }
+  .section-nav a { padding: 8px 16px; border: 1px solid rgba(6, 182, 212, 0.5); border-radius: 4px; color: #06b6d4; text-decoration: none; cursor: pointer; animation: section-blink 1.2s ease-in-out infinite; transition: all 0.3s; }
+  .section-nav a:hover { background: rgba(6, 182, 212, 0.2); }
+
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="page-nav">
+  <a href="cover.html" style="color:#d4a017;">Cover</a>
+  <a href="page1-web3-stance.html" style="color:#00d4ff;">Web3 Stance</a>
+  <a href="index.html" class="nav-link" style="color:var(--amber-light);background:rgba(200,148,42,.08);">
+    <span class="nav-dot" style="background:var(--amber);animation-delay:0s;"></span>Page 1 — Blueprint
+  </a>
+  <a href="page2.html" class="nav-link" style="color:rgba(167,139,250,.7);" onmouseover="this.style.color='#a78bfa';this.style.background='rgba(139,92,246,.1)'" onmouseout="this.style.color='rgba(167,139,250,.7)';this.style.background='transparent'">
+    <span class="nav-dot" style="background:rgba(124,58,237,0.9);animation-delay:.2s;"></span>Page 2 — Portfolio
+  </a>
+  <a href="page3-final.html" class="nav-link" style="color:rgba(74,222,128,.7);" onmouseover="this.style.color='#4ade80';this.style.background='rgba(74,222,128,.08)'" onmouseout="this.style.color='rgba(74,222,128,.7)';this.style.background='transparent'">
+    <span class="nav-dot" style="background:rgba(74,222,128,0.9);animation-delay:.4s;"></span>Page 3 — Ask Ameera
+  </a>
+  <a href="page4.html" class="nav-link" style="color:rgba(167,139,250,.7);" onmouseover="this.style.color='#a78bfa';this.style.background='rgba(139,92,246,.08)'" onmouseout="this.style.color='rgba(167,139,250,.7)';this.style.background='transparent'">
+    <span class="nav-dot" style="background:rgba(167,139,250,0.9);animation-delay:.6s;"></span>Page 4 — Founder Letter
+  </a>
+  <a href="page5.html" class="nav-link" style="color:rgba(245,158,11,.7);" onmouseover="this.style.color='#f59e0b';this.style.background='rgba(245,158,11,.08)'" onmouseout="this.style.color='rgba(245,158,11,.7)';this.style.background='transparent'">
+    <span class="nav-dot" style="background:rgba(245,158,11,0.9);animation-delay:.8s;"></span>Page 5 — Diesel &amp; Oils
+  </a>
+  <a href="page6.html" class="nav-link" style="color:#06b6d4;background:rgba(6,182,212,.08);">
+    <span class="nav-dot" style="background:#06b6d4;animation-delay:1s;"></span>Page 6 — Why Interview Ameera
+      <a class="nav-link" href="automations.html" style="color:#fbbf24;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#d97706;animation:navblink 1.1s ease-in-out infinite 1.44s;margin-right:4px;"></span>Solutions/Automations</a>
+  </a>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero" style="padding-top:100px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div class="hero-eyebrow">For the Hiring Manager · Web3</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:.05em;">~4 min read</div></div>
+  <h1 class="hero-title"><span class="blink-dot"></span>Why Interview<br/><em>Ameera</em></h1>
+      <a class="nav-link" href="automations.html" style="color:#fbbf24;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#d97706;animation:navblink 1.1s ease-in-out infinite 1.44s;margin-right:4px;"></span>Solutions/Automations</a>
+  <p class="hero-sub">
+    <strong>Because you won't find another candidate who has done all three things she has done — simultaneously, at scale, and with receipts.</strong>
+  </p>
+  <div class="hero-divider"></div>
+
+  <div class="section-nav">
+    <a onclick="document.getElementById('block1').scrollIntoView({behavior:'smooth'})">What You're Interviewing</a>
+    <a onclick="document.getElementById('block2').scrollIntoView({behavior:'smooth'})">Systems Thinking</a>
+    <a onclick="document.getElementById('block3').scrollIntoView({behavior:'smooth'})">Remote-Native</a>
+    <a onclick="document.getElementById('block4').scrollIntoView({behavior:'smooth'})">Architecture Level</a>
+    <a onclick="document.getElementById('block5').scrollIntoView({behavior:'smooth'})">Every Gap Closed</a>
+    <a onclick="document.getElementById('block6').scrollIntoView({behavior:'smooth'})">Coca-Cola Story</a>
+  </div>
+
+</div>
+
+<!-- ── CONTENT ── -->
+<div class="case-wrap">
+
+  <!-- BLOCK 1: What you're actually interviewing -->
+  <div id="block1"></div>
+  <div class="case-block amber">
+    <div class="case-label">What You Are Actually Interviewing</div>
+    <h2 class="case-heading">Most candidates can do <em>one</em> of these things.</h2>
+    <div class="case-body">
+      <p>Operate at executive level. <em>Or</em> manage complex logistics. <em>Or</em> build technology systems. <em>Or</em> recruit and develop people. <em>Or</em> navigate legal and compliance environments. <em>Or</em> work in Web3 and AI. <em>Or</em> run a business from scratch.</p>
+      <p><strong>Ameera has done all of it. Not in sequence. At the same time.</strong></p>
+      <p>You are interviewing someone who joined a single transport company with a filling station and no operational infrastructure — and over nine years, built the systems, the people frameworks, the compliance programmes, the financial controls, and the executive office architecture that allowed that business to grow into three entities, double its fleet to 200 units, acquire a manganese mine, scale a filling station into a full diesel depot, and increase turnover significantly — all while serving simultaneously as the CEO's Chief of Staff, Head of Operations, HR Manager, Finance Controller, Compliance Officer, and Legal Case Manager.</p>
+      <p><strong>She didn't manage that growth. She enabled it. There is a difference.</strong></p>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><span class="stat-num">9</span><span class="stat-lbl">Years · Sole Operator</span></div>
+      <div class="stat-box"><span class="stat-num">3</span><span class="stat-lbl">Concurrent Entities</span></div>
+      <div class="stat-box"><span class="stat-num">200</span><span class="stat-lbl">Fleet Units Scaled To</span></div>
+   <div class="stat-box"><span class="stat-num">6</span><span class="stat-lbl">Months Structured Handover · Diesel & Oils</span></div>   </div>
+  </div>
+
+  <!-- BLOCK 2: Invesstock -->
+  <div id="block2"></div>
+  <div class="case-block purple">
+    <div class="case-label">Strategist-Level Systems Thinking</div>
+    <h2 class="case-heading">She built the system that ran the business — <em>then named it.</em></h2>
+    <div class="case-body">
+      <p>Invesstock Managed Solutions is not a software product she bought. It is a proprietary operational management framework she designed from scratch to integrate oversight across three business entities with no external consultant, no off-the-shelf tool, and no template to follow.</p>
+      <p>She identified the gap, designed the solution, built it, implemented it, and ran it.</p>
+      <p><strong>That is not an operations manager skill. That is the entrepreneurial instinct — the build-it-yourself, own-it-end-to-end mindset — which is exactly what Web3’s Founder Associate role is asking for.</strong></p>
+    </div>
+  </div>
+
+  <!-- BLOCK 3: Remote since 2013 -->
+  <div id="block3"></div>
+  <div class="case-block cyan">
+    <div class="case-label">Remote-Native · Not Remote-Adapted</div>
+    <h2 class="case-heading">She has been remote since <em>2013</em> — not since COVID.</h2>
+    <div class="case-body">
+      <p>She managed 585 resources across SADC and ECOWAS at Ericsson without a shared office. She coordinated a 101-person international workforce at IBM across multiple geographies.</p>
+      <p>She has been working in globally distributed, async-first environments for over twelve years.</p>
+      <p><strong>This is not an adjustment she is making to qualify for your role. It is her natural operating environment.</strong></p>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><span class="stat-num">585</span><span class="stat-lbl">Resources · Ericsson SADC & ECOWAS</span></div>
+      <div class="stat-box"><span class="stat-num">101</span><span class="stat-lbl">Person International Account · IBM</span></div>
+      <div class="stat-box"><span class="stat-num">12+</span><span class="stat-lbl">Years Remote-First</span></div>
+    </div>
+  </div>
+
+  <!-- BLOCK 4: Architecture level -->
+  <div id="block4"></div>
+  <div class="case-block amber">
+    <div class="case-label">Systems Architecture · Not Interface Familiarity</div>
+    <h2 class="case-heading">She understands systems at the <em>architecture level.</em></h2>
+    <div class="case-body">
+      <p>Her education began with COBOL, C, C++, UNIX, and Linux at Boston House College. She understood logic, data structures, and process flow before most of her peers had heard of the internet.</p>
+      <p>That foundation is what separates her approach to AI workflow design from someone who started prompting in 2023.</p>
+      <p><strong>She doesn't just talk to systems. She builds them.</strong></p>
+    </div>
+  </div>
+
+  <!-- BLOCK 5: Closed every gap -->
+  <div id="block5"></div>
+  <div class="case-block purple">
+    <div class="case-label">Every Gap · Already Closed</div>
+    <h2 class="case-heading">She has closed every gap a hiring manager <em>would look for.</em></h2>
+    <div class="case-body">
+      <p><strong>KPI frameworks?</strong> Built one from scratch — and it drove measurable business growth.</p>
+      <p><strong>Cross-functional coordination?</strong> She was the sole coordination layer across three sites with no management hierarchy beneath the Founder.</p>
+      <p><strong>Strategic planning?</strong> Weekly off-site sessions with the Founder contributing to business direction across nine years.</p>
+      <p><strong>Confidentiality and discretion?</strong> She managed legal cases, CCMA proceedings, insurance investigations, and commercially sensitive matters as the Founder's sole trusted authority.</p>
+      <p><strong>Financial oversight?</strong> Two month-end billing cycles, Xero administration, diesel pricing index compliance, debtors, creditors, board reporting — all owned independently.</p>
+    </div>
+  </div>
+
+  <!-- BLOCK 6: Coca-Cola -->
+  <div id="block6"></div>
+  <div class="case-block green">
+    <div class="case-label">Radical Inclusion · Operationalised at Scale</div>
+    <h2 class="case-heading">And then there is the <em>Coca-Cola story.</em></h2>
+    <div class="case-body">
+      <p>Web3's core value is Radical Inclusion. Ameera didn't read about inclusion. She built a 100-seat call centre for Coca-Cola SA staffed entirely by employees with disabilities — then personally designed the physical workspace configurations for each individual based on their specific functional needs.</p>
+      <p><strong>That is inclusion operationalised at scale, done fifteen years before most companies had an inclusion policy.</strong></p>
+    </div>
+  </div>
+
+  <!-- PULL QUOTE -->
+  <div class="pull-quote">
+    <blockquote>"The candidate you are describing in your job posting — someone who can sit inside a founder's office, handle everything, build systems where none exist, coordinate across a globally distributed team, speak the language of Web3 and AI, and be trusted with the most sensitive work in the business — is not a common person."</blockquote>
+    <cite>— The honest answer to your question</cite>
+  </div>
+
+  <!-- MOST IMPORTANT BLOCK -->
+  <div class="most-important">
+    <div class="mi-label">The Bottom Line</div>
+    <p class="mi-text">
+      She is not a candidate who can <strong>grow into</strong> this role.<br/><br/>
+      She is a candidate who has already been <strong>living this role</strong> — in a harder environment, with fewer resources, and no playbook to follow.
+    </p>
+  </div>
+
+</div>
+
+<!-- ── CLOSING CTA ── -->
+<div class="closing">
+  <h2 class="closing-title">Call <em>Her.</em></h2>
+  <p class="closing-sub">She is available immediately. She is remote-ready. She is already building in your ecosystem. The conversation will confirm what this page has told you.</p>
+  <a href="tel:+27725807939" class="closing-phone">+27 72 580 7939</a>
+  <p style="margin-top:24px;font-size:12px;color:var(--text2);">amyxai@proton.me &nbsp;·&nbsp; Johannesburg, ZA &nbsp;·&nbsp; UTC+2 &nbsp;·&nbsp; Remote-First</p>
+</div>
+
+
+
+
+<!-- ── AI NARRATOR BAR ── -->
+<div class="narrator-bar hidden" id="narrator-bar">
+  <div class="narrator-inner">
+    <div class="narrator-av-wrap" id="n-play-pause">
+      <div class="narrator-av-ring"></div>
+      <img src="assets/avatar.jpg" class="narrator-av" alt="Ameera">
+      <div class="narrator-play-overlay">
+        <span id="play-icon">▶</span>
+      </div>
+    </div>
+    <div class="narrator-info">
+      <div class="narrator-meta">
+        <span id="n-seg-label">Segment 1 of 1 — The Case for Ameera</span>
+        <div class="waveform">
+          <div class="waveform-bar"></div><div class="waveform-bar"></div><div class="waveform-bar"></div><div class="waveform-bar"></div><div class="waveform-bar"></div>
+        </div>
+      </div>
+      <div class="narrator-caption" id="n-caption">"Most candidates can do one thing; Ameera has done all of it."</div>
+      <div class="narrator-progress-bg">
+        <div class="narrator-progress-fill" id="n-progress"></div>
+      </div>
+    </div>
+    <div class="narrator-controls">
+      <button class="n-btn" id="n-mute" title="Mute/Unmute">🔊 SILENCE AI</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .narrator-bar{position:fixed;bottom:0;left:0;right:0;height:72px;background:rgba(10,10,15,0.95);backdrop-filter:blur(16px);border-top:1px solid rgba(139,92,246,0.3);display:flex;align-items:center;padding:0 40px;z-index:1000;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);box-shadow:0 -10px 40px rgba(0,0,0,0.5);}
+  .narrator-bar.hidden{transform:translateY(100%);}
+  .narrator-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;gap:20px;}
+  .narrator-av-wrap{position:relative;width:48px;height:48px;cursor:pointer;flex-shrink:0;}
+  .narrator-av{width:100%;height:100%;border-radius:50%;border:2px solid var(--v);object-fit:cover;object-position:top;}
+  .narrator-av-ring{position:absolute;inset:-4px;border:1px solid var(--v);border-radius:50%;opacity:0;transition:opacity 0.3s;}
+  .narrator-play-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;opacity:1;transition:opacity 0.2s;}
+  .narrator-bar.playing .narrator-play-overlay{opacity:0;}
+  .narrator-info{flex:1;min-width:0;}
+  .narrator-meta{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
+  #n-seg-label{font-family:'Space Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--vl);}
+  .waveform{display:flex;align-items:center;gap:2px;height:10px;}
+  .waveform-bar{width:2px;height:4px;background:var(--v);border-radius:1px;}
+  .narrator-caption{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px;}
+  .narrator-progress-bg{height:2px;background:rgba(255,255,255,0.1);border-radius:1px;overflow:hidden;}
+  .narrator-progress-fill{height:100%;width:0%;background:var(--v);transition:width 0.1s linear;}
+  .n-btn{background:rgba(244,63,94,0.1);border:1px solid #f43f5e;color:#f87171;font-family:'Space Mono',monospace;font-size:8px;padding:6px 12px;border-radius:4px;cursor:pointer;transition:all 0.2s;letter-spacing:0.05em;}
+  .n-btn:hover{background:rgba(244,63,94,0.2);}
+  .n-btn.muted{background:rgba(16,185,129,0.1);border-color:#10b981;color:#10b981;}
+  
+  @keyframes narrator-pulse{0%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.2);opacity:0;}100%{transform:scale(1);opacity:0;}}
+  @keyframes waveform-anim{from{height:2px;}to{height:10px;}}
+  .narrator-bar.playing .narrator-av{box-shadow:0 0 15px var(--v);border-color:var(--vl);}
+  .narrator-bar.playing .narrator-av-ring{animation:narrator-pulse 2s infinite;opacity:0.6;}
+  .narrator-bar.playing .waveform-bar{animation:waveform-anim 0.6s ease-in-out infinite alternate;}
+  .narrator-bar.playing .waveform-bar:nth-child(2){animation-delay:0.1s;}
+  .narrator-bar.playing .waveform-bar:nth-child(3){animation-delay:0.2s;}
+  .narrator-bar.playing .waveform-bar:nth-child(4){animation-delay:0.3s;}
+  .narrator-bar.playing .waveform-bar:nth-child(5){animation-delay:0.4s;}
+
+  @keyframes section-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .section-nav { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 30px 0; padding: 20px; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 8px; background: rgba(6, 182, 212, 0.05); }
+  .section-nav a { padding: 8px 16px; border: 1px solid rgba(6, 182, 212, 0.5); border-radius: 4px; color: #06b6d4; text-decoration: none; cursor: pointer; animation: section-blink 1.2s ease-in-out infinite; transition: all 0.3s; }
+  .section-nav a:hover { background: rgba(6, 182, 212, 0.2); }
+
+</style>
+
+<script>
+  const SEGMENTS = [{"id": "intro", "label": "The Case for Ameera", "file": "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/p6_unified_bbf3d4e0.wav", "caption": "Most candidates can do one thing; Ameera has done all of it."}];
+  let currentSeg = 0;
+  let audio = new Audio();
+  let isPlaying = false;
+  let isMuted = false;
+  const bar = document.getElementById('narrator-bar');
+  const playBtn = document.getElementById('n-play-pause');
+  const muteBtn = document.getElementById('n-mute');
+  const progress = document.getElementById('n-progress');
+  const segLabel = document.getElementById('n-seg-label');
+  const caption = document.getElementById('n-caption');
+  const playIcon = document.getElementById('play-icon');
+
+  function initAudio() {
+    audio.src = SEGMENTS[currentSeg].file;
+    audio.onended = nextSegment;
+    audio.ontimeupdate = updateProgress;
+  }
+  function togglePlay() {
+    if(isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      bar.classList.remove('playing');
+      playIcon.textContent = '▶';
+    } else {
+      if(!audio.src) initAudio();
+      audio.play();
+      isPlaying = true;
+      bar.classList.add('playing');
+      playIcon.textContent = 'II';
+    }
+  }
+  function nextSegment() {
+    currentSeg++;
+    if(currentSeg < SEGMENTS.length) {
+      audio.src = SEGMENTS[currentSeg].file;
+      segLabel.textContent = `Segment ${currentSeg + 1} of ${SEGMENTS.length} — ${SEGMENTS[currentSeg].label}`;
+      caption.textContent = `"${SEGMENTS[currentSeg].caption}"`;
+      audio.play();
+    } else {
+      isPlaying = false;
+      currentSeg = 0;
+      bar.classList.remove('playing');
+      playIcon.textContent = '▶';
+      progress.style.width = '0%';
+    }
+  }
+  function updateProgress() {
+    const p = (audio.currentTime / audio.duration) * 100;
+    progress.style.width = p + '%';
+  }
+  playBtn.onclick = togglePlay;
+  muteBtn.onclick = () => {
+    isMuted = !isMuted;
+    audio.muted = isMuted;
+    muteBtn.classList.toggle('muted', isMuted);
+    muteBtn.textContent = isMuted ? '🔊 UNMUTE' : '🔊 SILENCE AI';
+  };
+  window.onload = () => setTimeout(() => bar.classList.remove('hidden'), 1000);
+</script>
+
+
+    <div style="text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 60px; color: rgba(255,255,255,0.6); font-size: 14px;">
+      <p>© 2026 Ameera Shonese Bapoo. All rights reserved.<br>
+      Visit <a href="https://www.ibmai.dev" style="color: inherit; text-decoration: none; border-bottom: 1px solid currentColor;">www.ibmai.dev</a> for more information</p>
+    </div>
+
+</body>
+</html>

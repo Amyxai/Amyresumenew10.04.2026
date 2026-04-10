@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ameera — Web3 Operator & Ecosystem Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --void: #040812;
+    --deep: #080f1e;
+    --surface: #0d1829;
+    --card: #111f35;
+    --border: #1a3050;
+    --border-glow: #1e4a7a;
+    --cyan: #00d4ff;
+    --cyan-dim: #0099bb;
+    --electric: #7b2fff;
+    --green: #00ff88;
+    --green-dim: #00cc66;
+    --amber: #ffaa00;
+    --text: #e0eaf8;
+    --muted: #5a7a99;
+    --subtle: #2a4060;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Navigation */
+  .nav-bar {
+    background: linear-gradient(135deg, var(--deep) 0%, rgba(0,212,255,0.04) 100%);
+    padding: 16px 0;
+    margin-bottom: 32px;
+    border-bottom: 2px solid var(--cyan);
+    position: relative;
+    z-index: 10;
+  }
+
+  .nav-links {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 64px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.2s;
+    padding: 6px 12px;
+    border-radius: 3px;
+  }
+
+  .nav-links a:hover {
+    color: var(--cyan);
+    background: rgba(0, 212, 255, 0.1);
+  }
+
+  .nav-links a.active {
+    color: var(--cyan);
+    border-bottom: 2px solid var(--cyan);
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 64px;
+  }
+
+  .scanline {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), var(--electric), transparent);
+    margin-bottom: 56px;
+    animation: scan 3s ease-in-out infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes scan {
+    0%, 100% { opacity: 0.4; transform: scaleX(0.8); }
+    50% { opacity: 1; transform: scaleX(1); }
+  }
+
+  @keyframes jump-blink {
+    0%, 100% { opacity: 1; border-color: var(--cyan); box-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
+    50% { opacity: 0.5; border-color: transparent; box-shadow: none; }
+  }
+  .jump-btn { animation: jump-blink 2s infinite; }
+
+  /* ── HEADER ── */
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 56px;
+  }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tag::before { content: '▸'; color: var(--green); }
+
+  .name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 78px;
+    letter-spacing: 4px;
+    line-height: 0.9;
+    background: linear-gradient(135deg, #fff 0%, var(--cyan) 60%, var(--electric) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .headline {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 14px;
+    letter-spacing: 0.3px;
+    font-weight: 400;
+    max-width: 420px;
+    line-height: 1.6;
+  }
+
+  .headline strong { color: var(--text); font-weight: 600; }
+
+  .status-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    min-width: 200px;
+  }
+
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .status-row:last-child { margin-bottom: 0; }
+
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot.green { background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 2s infinite; }
+  .dot.cyan  { background: var(--cyan);  box-shadow: 0 0 8px var(--cyan); }
+  .dot.amber { background: var(--amber); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── THESIS ── */
+  .thesis {
+    border: 1px solid var(--border-glow);
+    background: linear-gradient(135deg, var(--deep) 0%, rgba(0,212,255,0.04) 100%);
+    padding: 40px 44px;
+    margin-bottom: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .thesis::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--electric), var(--green));
+  }
+
+  .thesis-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 20px;
+  }
+
+  .thesis-body {
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .thesis-body strong { color: var(--cyan); font-weight: 600; }
+  .thesis-body em { color: var(--green); font-style: normal; font-weight: 500; }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .section-header h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .section-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── ROLES ── */
+  .roles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 56px;
+    background: var(--border);
+  }
+
+  .role {
+    background: var(--deep);
+    padding: 28px 30px;
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .role:hover { background: var(--surface); }
+
+  .role.anchor {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border-top: 2px solid var(--cyan);
+  }
+
+  .role-index {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--electric);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .role-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+  }
+
+  .role.anchor .role-title { font-size: 24px; color: var(--cyan); }
+
+  .role-sector {
+    font-family: 'Space Mono', monospace;
+    font-size: 9.5px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .role-fit { font-size: 14.5px; color: #8aa8c4; line-height: 1.65; }
+  .role.anchor .role-fit { font-size: 15.5px; color: #aac4d8; max-width: 680px; }
+
+  /* ── METRICS ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    margin-bottom: 56px;
+  }
+
+  .metric {
+    background: var(--deep);
+    padding: 28px 24px;
+    text-align: center;
+  }
+
+  .metric-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 2px;
+    line-height: 1;
+    color: var(--cyan);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .metric-value.green  { color: var(--green); }
+  .metric-value.purple { color: var(--electric); }
+
+  .metric-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── ARGUMENTS ── */
+  .why-web3 { margin-bottom: 56px; }
+
+  .argument {
+    border-left: 2px solid var(--border);
+    padding: 24px 0 24px 32px;
+    margin-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .argument:hover { border-left-color: var(--cyan); }
+
+  .argument-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--electric);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .argument-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .argument-body { font-size: 15px; color: #7a9ab8; line-height: 1.7; }
+  .argument-body strong { color: var(--green); font-weight: 600; }
+
+  /* ── SUPERPOWER TABLE ── */
+  .superpower-table { margin-bottom: 56px; }
+
+  .sp-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .sp-row:first-child { border-top: 1px solid var(--border); }
+
+  .sp-key {
+    font-family: 'Space Mono', monospace;
+    font-size: 10.5px;
+    color: var(--cyan);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.5;
+    padding-top: 2px;
+  }
+
+  .sp-val { font-size: 15px; color: #8aa8c4; line-height: 1.7; }
+  .sp-val strong { color: var(--text); font-weight: 600; }
+
+  /* ── CLOSING ── */
+  .closing {
+    background: var(--surface);
+    border: 1px solid var(--border-glow);
+    padding: 40px 44px;
+    margin-bottom: 52px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--electric), var(--cyan), var(--green));
+  }
+
+  .closing p { font-size: 17px; line-height: 1.85; color: var(--text); margin-bottom: 16px; }
+  .closing p:last-of-type { margin-bottom: 0; }
+  .closing em { color: var(--green); font-style: normal; font-weight: 600; }
+
+  .cta-line {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--cyan);
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .cta-line::before { content: '▶'; color: var(--green); font-size: 10px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-left {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    line-height: 2;
+  }
+
+  .footer-left strong { color: var(--green); }
+
+  .footer-right {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 2;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-right strong { color: var(--text); }
+
+  /* ── HR SPECTRUM ── */
+  .hr-spectrum { margin-bottom: 56px; }
+
+  .hr-intro {
+    background: linear-gradient(135deg, var(--deep) 0%, rgba(0,255,136,0.04) 100%);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--green);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: #8aa8c4;
+  }
+
+  .hr-intro strong { color: var(--green); font-weight: 600; }
+
+  .hr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    margin-bottom: 16px;
+  }
+
+  .hr-card {
+    background: var(--deep);
+    padding: 24px 26px;
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .hr-card:hover { background: var(--surface); }
+
+  .hr-card.wide {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border-top: 2px solid var(--green);
+  }
+
+  .hr-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .hr-card.wide .hr-badge { color: var(--green); }
+
+  .hr-role-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: -0.2px;
+  }
+
+  .hr-card.wide .hr-role-title {
+    font-size: 20px;
+    color: var(--green);
+  }
+
+  .hr-role-body {
+    font-size: 13.5px;
+    color: #6a8aaa;
+    line-height: 1.65;
+  }
+
+  .hr-card.wide .hr-role-body {
+    font-size: 14.5px;
+    color: #8aa8c4;
+    max-width: 680px;
+  }
+
+  .hr-role-body strong { color: var(--text); font-weight: 600; }
+
+  .hr-trend-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    padding: 22px 28px;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .hr-trend-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    padding-top: 3px;
+    line-height: 1.6;
+  }
+
+  .hr-trend-body {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #7a9ab8;
+  }
+
+  .hr-trend-body strong { color: var(--text); font-weight: 600; }
+  .hr-trend-body em { color: var(--green); font-style: normal; font-weight: 500; }
+
+  @media (max-width: 700px) {
+    .page { padding: 32px 24px; }
+    .header { grid-template-columns: 1fr; }
+    .roles { grid-template-columns: 1fr; }
+    .role.anchor { grid-column: 1; }
+    .metrics { grid-template-columns: 1fr; }
+    .name { font-size: 56px; }
+  }
+
+  @keyframes blink-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.8); } }
+  .blink-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--v, #8b5cf6); margin-right: 15px; vertical-align: middle; animation: blink-dot 1.5s ease-in-out infinite; box-shadow: 0 0 10px var(--v, #8b5cf6); }
+
+  /* NARRATOR BAR STYLES */
+    .narrator-bar{position:fixed;bottom:0;left:0;right:0;height:72px;background:rgba(10,10,15,0.95);backdrop-filter:blur(16px);border-top:1px solid rgba(139,92,246,0.3);display:flex;align-items:center;padding:0 40px;z-index:1000;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);box-shadow:0 -10px 40px rgba(0,0,0,0.5);}
+    .narrator-bar.hidden{transform:translateY(100%);}
+    .narrator-av-wrap{position:relative;margin-right:20px;flex-shrink:0;}
+    .narrator-av{width:44px;height:44px;border-radius:50%;border:2px solid var(--v);object-fit:cover;transition:all 0.3s;}
+    .narrator-bar.playing .narrator-av{box-shadow:0 0 15px var(--v);border-color:var(--vl);}
+    .narrator-av-ring{position:absolute;inset:-4px;border:1px solid var(--v);border-radius:50%;opacity:0;transition:all 0.3s;}
+    .narrator-bar.playing .narrator-av-ring{animation:narrator-pulse 2s infinite;opacity:0.6;}
+    @keyframes narrator-pulse{0%{transform:scale(1);opacity:0.6;}100%{transform:scale(1.4);opacity:0;}}
+    .narrator-info{flex:1;min-width:0;}
+    .narrator-label{font-size:9px;text-transform:uppercase;letter-spacing:0.15em;color:var(--v);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+    .narrator-caption{font-family:'Instrument Serif',serif;font-style:italic;font-size:15px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .narrator-controls{display:flex;align-items:center;gap:12px;margin-left:24px;}
+    .narrator-btn{background:var(--v);color:#fff;border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;font-size:14px;}
+    .narrator-btn:hover{background:var(--vl);transform:scale(1.05);}
+    .narrator-mute{background:transparent;border:1px solid #f43f5e;color:#f43f5e;border-radius:6px;padding:8px 14px;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+    .narrator-mute.muted{background:#10b981;border-color:#10b981;color:#fff;}
+    .narrator-progress{position:absolute;top:-1px;left:0;height:2px;background:linear-gradient(90deg, var(--v), var(--amber));width:0%;transition:width 0.1s linear;}
+    .waveform{display:flex;align-items:flex-end;gap:2px;height:16px;margin-left:12px;}
+    .waveform-bar{width:2px;background:var(--v);border-radius:1px;transition:height 0.2s ease;}
+    .narrator-bar.playing .waveform-bar{animation:waveform-anim 0.6s ease-in-out infinite alternate;}
+    @keyframes waveform-anim{from{height:4px;}to{height:16px;}}
+    .waveform-bar:nth-child(2){animation-delay:0.1s;}
+    .waveform-bar:nth-child(3){animation-delay:0.2s;}
+    .waveform-bar:nth-child(4){animation-delay:0.3s;}
+    .waveform-bar:nth-child(5){animation-delay:0.4s;}
+
+</style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="nav-bar">
+    <div class="nav-links">
+      <a class="nav-link" href="cover.html" style="color:#d4a017;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#b8860b;animation:navblink 1.1s ease-in-out infinite 0.00s;margin-right:4px;"></span>Cover</a>
+      <a class="nav-link" href="page2.html" style="color:#a78bfa;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#7c3aed;animation:navblink 1.1s ease-in-out infinite 0.18s;margin-right:4px;"></span>Portfolio</a>
+      <a class="nav-link active" href="page1-web3-stance.html" style="color:#22d3ee;border-color:#0891b2;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#0891b2;animation:navblink 1.1s ease-in-out infinite 0.36s;margin-right:4px;"></span>Web3 Stance</a>
+      <a class="nav-link" href="page5.html" style="color:#fbbf24;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#d97706;animation:navblink 1.1s ease-in-out infinite 0.54s;margin-right:4px;"></span>Diesel & Oils</a>
+      <a class="nav-link" href="index.html" style="color:#e8b84b;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#c8942a;animation:navblink 1.1s ease-in-out infinite 0.72s;margin-right:4px;"></span>Blueprint</a>
+      <a class="nav-link" href="page3-final.html" style="color:#4ade80;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#16a34a;animation:navblink 1.1s ease-in-out infinite 0.90s;margin-right:4px;"></span>Ask Ameera</a>
+      <a class="nav-link" href="page4.html" style="color:#c084fc;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#9333ea;animation:navblink 1.1s ease-in-out infinite 1.08s;margin-right:4px;"></span>Founder Letter</a>
+      <a class="nav-link" href="page6.html" style="color:#22d3ee;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#0891b2;animation:navblink 1.1s ease-in-out infinite 1.26s;margin-right:4px;"></span>Why Interview</a>
+      <a class="nav-link" href="automations.html" style="color:#fbbf24;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#d97706;animation:navblink 1.1s ease-in-out infinite 1.44s;margin-right:4px;"></span>Solutions/Automations</a>
+      <a class="nav-link" href="page2.html#contact" style="color:#e8b84b;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#c8942a;animation:navblink 1.1s ease-in-out infinite 1.62s;margin-right:4px;"></span>Contact Ameera</a>
+    </div>
+</div>
+
+<div class="page">
+<!-- Page Header -->
+<div style="text-align: center; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border);">
+  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px;">Page 1 — Strategic Positioning</div>
+  <h1 style="font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 2px; color: var(--text); margin-bottom: 12px;">Web3 Operator & Ecosystem Builder</h1>
+  <p style="font-size: 15px; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.6;">My stance on Web3, the roles I'm built for, and why this is not a pivot — it's a convergence.</p>
+</div>
+
+<!-- Section Navigation -->
+<div style="background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 6px; padding: 16px 20px; margin-bottom: 32px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+  <span style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(0, 212, 255, 0.6); margin-right: 8px;">Jump to:</span>
+  <a href="#thesis" class="jump-btn" style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #00d4ff; text-decoration: none; padding: 6px 12px; border: 1px solid #00d4ff; border-radius: 4px; transition: all 0.2s; animation-delay: 0s;" onmouseover="this.style.background='#00d4ff'; this.style.color='#0a0d0f';" onmouseout="this.style.background='transparent'; this.style.color='#00d4ff';">Thesis</a>
+  <a href="#roles" class="jump-btn" style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #00d4ff; text-decoration: none; padding: 6px 12px; border: 1px solid #00d4ff; border-radius: 4px; transition: all 0.2s; animation-delay: 0.4s;" onmouseover="this.style.background='#00d4ff'; this.style.color='#0a0d0f';" onmouseout="this.style.background='transparent'; this.style.color='#00d4ff';">Roles</a>
+  <a href="#metrics" class="jump-btn" style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #00d4ff; text-decoration: none; padding: 6px 12px; border: 1px solid #00d4ff; border-radius: 4px; transition: all 0.2s; animation-delay: 0.8s;" onmouseover="this.style.background='#00d4ff'; this.style.color='#0a0d0f';" onmouseout="this.style.background='transparent'; this.style.color='#00d4ff';">Metrics</a>
+  <a href="#why-web3" class="jump-btn" style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #00d4ff; text-decoration: none; padding: 6px 12px; border: 1px solid #00d4ff; border-radius: 4px; transition: all 0.2s; animation-delay: 1.2s;" onmouseover="this.style.background='#00d4ff'; this.style.color='#0a0d0f';" onmouseout="this.style.background='transparent'; this.style.color='#00d4ff';">Why Web3</a>
+  <a href="#hr-roles" class="jump-btn" style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #00d4ff; text-decoration: none; padding: 6px 12px; border: 1px solid #00d4ff; border-radius: 4px; transition: all 0.2s; animation: section-blink 1.2s ease-in-out infinite;">HR Roles</a>
+</div>
+
+  <div class="scanline"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div>
+      <div class="tag">Web3 Operator · People Leader · AI Strategist · Ecosystem Builder</div>
+      <div class="name"><span class="blink-dot" style="background:#b8860b;box-shadow:0 0 10px #b8860b;"></span>Ameera</div>
+      <p class="headline">
+        <strong>Nine years building operational infrastructure</strong> for high-growth companies.
+        Now deploying that same capability inside Web3 — the infrastructure layer the
+        industry has always needed and rarely finds.
+      </p>
+      <p class="caption" style="font-size: 14px; color: var(--cyan); margin-top: 10px; font-style: italic;">"Web3 does for ownership what open source did for software."</p>
+    </div>
+    <div class="status-panel">
+      <div class="status-row"><span class="dot green"></span> Available Now</div>
+      <div class="status-row"><span class="dot cyan"></span> Johannesburg, ZA</div>
+      <div class="status-row"><span class="dot cyan"></span> Remote · Global</div>
+      <div class="status-row"><span class="dot amber"></span> AI Venture: Active</div>
+    </div>
+  </header>
+
+  <div id="thesis"><!-- THESIS -->
+  <div class="thesis">
+    <div class="thesis-label">// Career Pivot Thesis</div>
+    <div class="thesis-body">
+      What drew me to Web3 was recognising something familiar: the same operational
+      challenges I spent nine years solving in high-growth companies. Governance without
+      structure. Scaling without systems. Compliance treated as an afterthought.
+      <strong>The technology in this space is extraordinary</strong> — the operational foundations
+      are still being figured out. That is not a criticism of the space.
+      <em>It is the opportunity I am positioning myself to help solve.</em>
+    </div>
+  </div>
+
+  <div id="roles"><!-- ROLES -->
+  <div class="section-header"><h2>// The 5 Roles I Am Targeting in Web3</h2></div>
+
+  <div class="roles">
+
+    <div class="role anchor">
+      <div class="role-index">01 · Primary Target</div>
+      <div class="role-title">Founder Associate — Web3 / Crypto Infrastructure</div>
+      <div class="role-sector">Fiat-to-Crypto · DeFi · Layer 1 / Layer 2 · Payments Infrastructure</div>
+      <div class="role-fit">
+        The protocols building real financial infrastructure — fiat on-ramps, cross-border
+        settlement, DeFi rails — need operators who can hold strategic context and execute
+        without hand-holding. My nine years as a founder's sole operational authority
+        is the exact experience this role demands. I do not need to be onboarded into
+        how hard it is. I already know.
+      </div>
+    </div>
+
+    <div class="role">
+      <div class="role-index">02</div>
+      <div class="role-title">Head of Operations — Web3 Protocol / DAO</div>
+      <div class="role-sector">Protocol Ops · Treasury · Governance</div>
+      <div class="role-fit">
+        I designed multi-entity operational systems from zero. Running protocol
+        operations — contributor management, treasury flows, cross-team coordination —
+        is the same challenge at a different altitude. I bring the systems thinking
+        Web3 native teams rarely have.
+      </div>
+    </div>
+
+    <div class="role">
+      <div class="role-index">03</div>
+      <div class="role-title">Ecosystem Growth Lead</div>
+      <div class="role-sector">Partnerships · Community · Emerging Markets</div>
+      <div class="role-fit">
+        Emerging markets represent Web3's fastest-growing frontier — highest P2P
+        volume, mobile-first financial behaviour, strongest demand for fiat rails.
+        I operate inside these markets natively, not as an outside observer. That
+        access is not something a competitor can replicate quickly.
+      </div>
+    </div>
+
+    <div class="role">
+      <div class="role-index">04</div>
+      <div class="role-title">Compliance & Risk Lead — Fintech / Web3</div>
+      <div class="role-sector">RegTech · AML / KYC · Regulatory Strategy</div>
+      <div class="role-fit">
+        Nine years as the sole legal and compliance authority across regulated
+        transport and mining environments. That rigour — applied to crypto
+        licensing, AML frameworks, and cross-border regulatory navigation —
+        is a rare combination the market actively needs.
+      </div>
+    </div>
+
+    <div class="role">
+      <div class="role-index">05</div>
+      <div class="role-title">Web3 Ventures Lead / Portfolio Operator</div>
+      <div class="role-sector">VC · Accelerator · Venture Studio</div>
+      <div class="role-fit">
+        For VCs and accelerators deploying capital into Web3 — I can assess
+        operational viability, embed into portfolio companies, and build the
+        infrastructure that turns ambitious protocols into durable businesses.
+      </div>
+    </div>
+
+  </div>
+
+  <div id="metrics"><!-- METRICS -->
+  <div class="section-header"><h2>// What Nine Years Actually Built</h2></div>
+  <div class="metrics">
+    <div class="metric">
+      <span class="metric-value">3×</span>
+      <div class="metric-label">Companies Built<br/>From One</div>
+    </div>
+    <div class="metric">
+      <span class="metric-value green">2×</span>
+      <div class="metric-label">Fleet Scale<br/>Achieved</div>
+    </div>
+    <div class="metric">
+      <span class="metric-value purple">1</span>
+      <div class="metric-label">Live AI Venture<br/>Founded</div>
+    </div>
+  </div>
+
+  <div id="why-web3"><!-- WHY WEB3 -->
+  <div class="why-web3">
+    <div class="section-header"><h2>// Why Web3 Is My Natural Home</h2></div>
+
+    <div class="argument">
+      <div class="argument-num">Argument 01</div>
+      <div class="argument-title">Web3 Is an Infrastructure Problem. I Build Infrastructure.</div>
+      <div class="argument-body">
+        Every Web3 project that fails, fails operationally — not technically. Missing governance,
+        broken treasury management, no contributor accountability, zero legal clarity.
+        <strong>I spent nine years solving exactly these problems</strong> in high-stakes, real-world
+        environments where failure was not theoretical.
+      </div>
+    </div>
+
+    <div class="argument">
+      <div class="argument-num">Argument 02</div>
+      <div class="argument-title">Emerging Markets Are Web3's Fastest Frontier — I Am Already Operating Inside Them.</div>
+      <div class="argument-body">
+        The highest-growth crypto markets globally share a common profile: mobile-first
+        financial behaviour, underbanked populations, strong demand for fiat on-ramp
+        infrastructure, and peer-to-peer volume that dwarfs Western equivalents.
+        <strong>I do not advise on these markets from a distance — I operate inside them.</strong>
+      </div>
+    </div>
+
+    <div class="argument">
+      <div class="argument-num">Argument 03</div>
+      <div class="argument-title">I Am a Builder, Not a Theorist. My Venture Proves It.</div>
+      <div class="argument-body">
+        iBMit AI Now is live. I did not read about the convergence of AI and Web3 —
+        I built into it. <strong>Founders and protocols that need operators who move</strong>
+        will recognise the difference between someone who studies the space and
+        someone who participates in it.
+      </div>
+    </div>
+
+    <div class="argument">
+      <div class="argument-num">Argument 04</div>
+      <div class="argument-title">Compliance Is Not a Constraint — It Is a Competitive Moat.</div>
+      <div class="argument-body">
+        As global regulators accelerate crypto frameworks — MiCA in Europe, evolving
+        VASP regimes worldwide, SEC pressure in the US — protocols with real compliance
+        infrastructure will survive where others scramble. <strong>I bring legal and regulatory
+        depth that most Web3 operators have never had to develop.</strong>
+      </div>
+    </div>
+
+    <div class="argument">
+      <div class="argument-num">Argument 05</div>
+      <div class="argument-title">The Web3 Industry Is Maturing. It Needs Operators Who Have Scaled Before.</div>
+      <div class="argument-body">
+        The first generation of Web3 was built by coders and idealists. The next generation
+        will be built by people who know how to hire, govern, comply, and scale.
+        <strong>That is the transition happening now. I am positioned exactly at its centre.</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUPERPOWER TABLE -->
+  <div class="superpower-table">
+    <div class="section-header"><h2>// My Web3 Superpower Stack</h2></div>
+
+    <div class="sp-row">
+      <div class="sp-key">Operational Architecture</div>
+      <div class="sp-val">Built multi-entity systems, KPI frameworks, and proprietary management tools (<strong>Invesstock Managed Solutions</strong>) from zero. Direct translation to DAO governance and protocol operations design.</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-key">Legal & Compliance</div>
+      <div class="sp-val">Nine years as <strong>sole compliance authority</strong> across transport licensing, mining regulation, and multi-entity corporate governance. Ready for crypto licensing, AML/KYC frameworks, and cross-border regulatory navigation.</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-key">AI × Web3 Intersection</div>
+      <div class="sp-val">Active founder in AI — <strong>iBMit AI Now</strong>. Positioned at the convergence of AI tooling and decentralised infrastructure, the most closely watched frontier in the space right now.</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-key">Emerging Market Access</div>
+      <div class="sp-val"><strong>Native operator in high-growth emerging markets</strong> with strong crypto adoption curves. For protocols targeting these regions, this is not a nice-to-have — it is a strategic entry point most competitors cannot buy.</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-key">Founder Proximity</div>
+      <div class="sp-val">Nine years as a <strong>founder's closest and most trusted operator</strong>. I understand what founders need before they articulate it — critical in early-stage Web3 environments where speed and trust are everything.</div>
+    </div>
+  </div>
+
+  <!-- HR SPECTRUM -->
+  <div id="hr-roles" class="hr-spectrum">
+    <div class="section-header"><h2>// Also Targeting — People & HR Spectrum</h2></div>
+
+    <div class="hr-intro">
+      People management was never a siloed function in my career — it was embedded
+      in everything I built. Across nine years and three entities, I hired, onboarded,
+      structured performance frameworks, and shaped workforce culture as a core part
+      of operational leadership. <strong>I bring a systems thinker's approach to People</strong> —
+      grounded in data, process design, and the understanding that how an organisation
+      manages its people is inseparable from how it scales.
+    </div>
+
+    <div class="hr-grid">
+
+      <div class="hr-card wide">
+        <span class="hr-badge">// Senior · Leadership</span>
+        <div class="hr-role-title">Head of People — Startups & Scale-ups</div>
+        <div class="hr-role-body">
+          Early-stage companies need a People leader who is also an operator — someone
+          who can build the function from scratch, hire without a template, and design
+          culture deliberately rather than accidentally. I have done this at the company
+          level across multiple entities. A dedicated People mandate is a natural and
+          well-evidenced step from that foundation.
+        </div>
+      </div>
+
+      <div class="hr-card">
+        <span class="hr-badge">// Operations</span>
+        <div class="hr-role-title">People Operations Manager</div>
+        <div class="hr-role-body">
+          Built HR workflows, employment contracts, onboarding systems, and performance
+          review cycles across multiple entities from zero. People Ops, to me, is not
+          an administrative function — it is the <strong>connective infrastructure</strong>
+          of how organisations scale with their people intact.
+        </div>
+      </div>
+
+      <div class="hr-card">
+        <span class="hr-badge">// Culture & Experience</span>
+        <div class="hr-role-title">People & Culture Lead</div>
+        <div class="hr-role-body">
+          Culture is shaped through decisions, not slogans. My experience building team
+          identity through hiring choices, values alignment, and how performance was
+          managed across growth phases gives me a practitioner's understanding of what
+          <strong>intentional culture design</strong> actually requires.
+        </div>
+      </div>
+
+      <div class="hr-card">
+        <span class="hr-badge">// Talent & Onboarding</span>
+        <div class="hr-role-title">Onboarding Manager / Specialist</div>
+        <div class="hr-role-body">
+          Designed and managed full-cycle onboarding across operational, administrative,
+          and field-level roles. The rigour required to onboard safely in a regulated,
+          high-risk transport environment <strong>translates directly</strong> to any
+          structured, compliance-conscious onboarding programme.
+        </div>
+      </div>
+
+      <div class="hr-card">
+        <span class="hr-badge">// Employee Experience</span>
+        <div class="hr-role-title">Employee Experience Manager</div>
+        <div class="hr-role-body">
+          Workforce retention in a demanding operational environment required active
+          attention to the employee journey — not just policies on paper. I understand
+          how <strong>experience design across the employee lifecycle</strong> directly
+          affects performance, retention, and organisational health.
+        </div>
+      </div>
+
+      <div class="hr-card">
+        <span class="hr-badge">// Talent Operations</span>
+        <div class="hr-role-title">Talent Operations Partner</div>
+        <div class="hr-role-body">
+          End-to-end recruitment, onboarding infrastructure, and talent pipeline management
+          built across multiple roles and entities — under operational urgency where both
+          speed and quality mattered. <strong>Talent acquisition, for me, has always been
+          tied to business outcomes.</strong>
+        </div>
+      </div>
+
+      <div class="hr-card">
+        <span class="hr-badge">// Strategic</span>
+        <div class="hr-role-title">Workforce Planning Manager</div>
+        <div class="hr-role-body">
+          Managed headcount decisions, shift structures, and resource allocation across
+          a growing and diversifying business. Workforce planning was directly tied to
+          <strong>operational cost, safety compliance, and business continuity</strong> —
+          not a theoretical exercise.
+        </div>
+      </div>
+
+      <div class="hr-card">
+        <span class="hr-badge">// AI-Driven Hiring</span>
+        <div class="hr-role-title">Talent Intelligence Specialist</div>
+        <div class="hr-role-body">
+          As an active AI founder and builder, I sit at the intersection of people
+          strategy and AI-driven automation. I understand both the human dimension of
+          talent and the <strong>tools now reshaping how organisations source, assess,
+          and retain</strong> their people — from both sides of the equation.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hr-trend-bar">
+      <div class="hr-trend-label">// Market<br/>Shift</div>
+      <div class="hr-trend-body">
+        The People function is undergoing its most significant transformation in a generation.
+        <strong>Administrative HR is being automated.</strong> What organisations are now hiring for
+        is the intersection of systems thinking, people insight, data fluency, and AI literacy.
+        <em>That is precisely where my profile sits</em> — an operator with deep people experience
+        who is also actively building in AI. The evolution of HR is not a challenge to navigate.
+        It is a space I already occupy.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <p>
+      I am not transitioning into Web3 from the outside. I am arriving with the operational
+      infrastructure the industry is missing — and the clarity of someone who has chosen
+      this deliberately, not stumbled here.
+    </p>
+    <p>
+      The protocols I want to work with are building something real: fiat infrastructure,
+      cross-border rails, DeFi governance, ecosystem expansion into underserved markets.
+      Not speculation — <em>infrastructure</em>. That is where my experience compounds
+      fastest, and where I intend to build my next decade.
+    </p>
+    <p>
+      If you are building that kind of company, or know someone who is — I am ready
+      for a direct conversation. I will bring a point of view, not just a CV.
+    </p>
+    <div class="cta-line">20 minutes. Let's establish fit and move from there.</div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-left">
+      Active Venture<br/>
+      <strong>iBMit AI Now</strong> · AI Enablement
+    </div>
+    <div class="footer-right">
+      Johannesburg, South Africa<br/>
+      <strong>Open: Remote · Relocate · Global</strong><br/>
+      Web3 · DeFi · Fintech · AI · People
+    </div>
+  </footer>
+
+</div>
+<!-- NARRATOR BAR -->
+
+
+
+<!-- ── AI NARRATOR BAR ── -->
+<div class="narrator-bar hidden" id="narrator-bar">
+  <div class="narrator-inner">
+    <div class="narrator-av-wrap" id="n-play-pause">
+      <div class="narrator-av-ring"></div>
+      <img src="assets/avatar.jpg" class="narrator-av" alt="Ameera">
+      <div class="narrator-play-overlay">
+        <span id="play-icon">▶</span>
+      </div>
+    </div>
+    <div class="narrator-info">
+      <div class="narrator-meta">
+        <span id="n-seg-label">Segment 1 of 1 — Web3 Stance</span>
+        <div class="waveform">
+          <div class="waveform-bar"></div><div class="waveform-bar"></div><div class="waveform-bar"></div><div class="waveform-bar"></div><div class="waveform-bar"></div>
+        </div>
+      </div>
+      <div class="narrator-caption" id="n-caption">"My stance on Web3 and the future of decentralized infrastructure."</div>
+      <div class="narrator-progress-bg">
+        <div class="narrator-progress-fill" id="n-progress"></div>
+      </div>
+    </div>
+    <div class="narrator-controls">
+      <button class="n-btn" id="n-mute" title="Mute/Unmute">🔊 SILENCE AI</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .narrator-bar{position:fixed;bottom:0;left:0;right:0;height:72px;background:rgba(10,10,15,0.95);backdrop-filter:blur(16px);border-top:1px solid rgba(139,92,246,0.3);display:flex;align-items:center;padding:0 40px;z-index:1000;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);box-shadow:0 -10px 40px rgba(0,0,0,0.5);}
+  .narrator-bar.hidden{transform:translateY(100%);}
+  .narrator-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;gap:20px;}
+  .narrator-av-wrap{position:relative;width:48px;height:48px;cursor:pointer;flex-shrink:0;}
+  .narrator-av{width:100%;height:100%;border-radius:50%;border:2px solid var(--v);object-fit:cover;object-position:top;}
+  .narrator-av-ring{position:absolute;inset:-4px;border:1px solid var(--v);border-radius:50%;opacity:0;transition:opacity 0.3s;}
+  .narrator-play-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;opacity:1;transition:opacity 0.2s;}
+  .narrator-bar.playing .narrator-play-overlay{opacity:0;}
+  .narrator-info{flex:1;min-width:0;}
+  .narrator-meta{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
+  #n-seg-label{font-family:'Space Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--vl);}
+  .waveform{display:flex;align-items:center;gap:2px;height:10px;}
+  .waveform-bar{width:2px;height:4px;background:var(--v);border-radius:1px;}
+  .narrator-caption{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px;}
+  .narrator-progress-bg{height:2px;background:rgba(255,255,255,0.1);border-radius:1px;overflow:hidden;}
+  .narrator-progress-fill{height:100%;width:0%;background:var(--v);transition:width 0.1s linear;}
+  .n-btn{background:rgba(244,63,94,0.1);border:1px solid #f43f5e;color:#f87171;font-family:'Space Mono',monospace;font-size:8px;padding:6px 12px;border-radius:4px;cursor:pointer;transition:all 0.2s;letter-spacing:0.05em;}
+  .n-btn:hover{background:rgba(244,63,94,0.2);}
+  .n-btn.muted{background:rgba(16,185,129,0.1);border-color:#10b981;color:#10b981;}
+  
+  @keyframes narrator-pulse{0%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.2);opacity:0;}100%{transform:scale(1);opacity:0;}}
+  @keyframes waveform-anim{from{height:2px;}to{height:10px;}}
+  .narrator-bar.playing .narrator-av{box-shadow:0 0 15px var(--v);border-color:var(--vl);}
+  .narrator-bar.playing .narrator-av-ring{animation:narrator-pulse 2s infinite;opacity:0.6;}
+  .narrator-bar.playing .waveform-bar{animation:waveform-anim 0.6s ease-in-out infinite alternate;}
+  .narrator-bar.playing .waveform-bar:nth-child(2){animation-delay:0.1s;}
+  .narrator-bar.playing .waveform-bar:nth-child(3){animation-delay:0.2s;}
+  .narrator-bar.playing .waveform-bar:nth-child(4){animation-delay:0.3s;}
+  .narrator-bar.playing .waveform-bar:nth-child(5){animation-delay:0.4s;}
+</style>
+
+<script>
+  const SEGMENTS = [{"id": "intro", "label": "Web3 Stance", "file": "https://d2xsxph8kpxj0f.cloudfront.net/310519663286982940/3YpGaXwkginMNaU9rz7bxk/web3_unified_13d92980.wav", "caption": "My stance on Web3 and the future of decentralized infrastructure."}];
+  let currentSeg = 0;
+  let audio = new Audio();
+  let isPlaying = false;
+  let isMuted = false;
+  const bar = document.getElementById('narrator-bar');
+  const playBtn = document.getElementById('n-play-pause');
+  const muteBtn = document.getElementById('n-mute');
+  const progress = document.getElementById('n-progress');
+  const segLabel = document.getElementById('n-seg-label');
+  const caption = document.getElementById('n-caption');
+  const playIcon = document.getElementById('play-icon');
+
+  function initAudio() {
+    audio.src = SEGMENTS[currentSeg].file;
+    audio.onended = nextSegment;
+    audio.ontimeupdate = updateProgress;
+  }
+  function togglePlay() {
+    if(isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      bar.classList.remove('playing');
+      playIcon.textContent = '▶';
+    } else {
+      if(!audio.src) initAudio();
+      audio.play();
+      isPlaying = true;
+      bar.classList.add('playing');
+      playIcon.textContent = 'II';
+    }
+  }
+  function nextSegment() {
+    currentSeg++;
+    if(currentSeg < SEGMENTS.length) {
+      audio.src = SEGMENTS[currentSeg].file;
+      segLabel.textContent = `Segment ${currentSeg + 1} of ${SEGMENTS.length} — ${SEGMENTS[currentSeg].label}`;
+      caption.textContent = `"${SEGMENTS[currentSeg].caption}"`;
+      audio.play();
+    } else {
+      isPlaying = false;
+      currentSeg = 0;
+      bar.classList.remove('playing');
+      playIcon.textContent = '▶';
+      progress.style.width = '0%';
+    }
+  }
+  function updateProgress() {
+    const p = (audio.currentTime / audio.duration) * 100;
+    progress.style.width = p + '%';
+  }
+  playBtn.onclick = togglePlay;
+  muteBtn.onclick = () => {
+    isMuted = !isMuted;
+    audio.muted = isMuted;
+    muteBtn.classList.toggle('muted', isMuted);
+    muteBtn.textContent = isMuted ? '🔊 UNMUTE' : '🔊 SILENCE AI';
+  };
+  window.onload = () => setTimeout(() => bar.classList.remove('hidden'), 1000);
+</script>
+
+
+    <div style="text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 60px; color: rgba(255,255,255,0.6); font-size: 14px;">
+      <p>© 2026 Ameera Shonese Bapoo. All rights reserved.<br>
+      Visit <a href="https://www.ibmai.dev" style="color: inherit; text-decoration: none; border-bottom: 1px solid currentColor;">www.ibmai.dev</a> for more information</p>
+    </div>
+
+</body>
+</html>

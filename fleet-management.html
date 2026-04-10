@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="iBMit Ai PTY LTD Fleet Management — Real-time driver document tracking and compliance monitoring.">
+  <title>Fleet Management — iBMit Ai PTY LTD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0d0d0d;
+      --paper: #f5f0e8;
+      --gold: #b8860b;
+      --gold-light: #d4a017;
+      --rust: #8b3a2a;
+      --muted: #6b6459;
+      --rule: #d4c9b0;
+      --light-bg: #faf8f3;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .nav-bar {
+      background: var(--ink);
+      padding: 12px 0;
+      border-bottom: 2px solid var(--gold);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-links {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #c4bdb0;
+      transition: all 0.3s;
+      padding: 6px 12px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+      background: rgba(184, 134, 11, 0.1);
+    }
+
+    .nav-links a.active {
+      color: var(--gold);
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .page-header {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 48px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      color: var(--ink);
+    }
+
+    .page-header .subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .page-header p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 700px;
+      line-height: 1.8;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 48px;
+    }
+
+    .demo-section {
+      margin-bottom: 60px;
+    }
+
+    .demo-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+
+    .demo-section p {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .feature-card {
+      background: var(--light-bg);
+      padding: 32px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+      background: white;
+      border-color: var(--gold);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      transform: translateY(-4px);
+    }
+
+    .feature-card .icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .iframe-container {
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin-bottom: 60px;
+    }
+
+    .iframe-header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 24px 32px;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .iframe-header h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0;
+      color: var(--gold);
+    }
+
+    iframe {
+      width: 100%;
+      height: 900px;
+      border: none;
+      display: block;
+    }
+
+    .cta-section {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 60px 48px;
+      border-radius: 4px;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .cta-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--gold);
+    }
+
+    .cta-section p {
+      font-size: 18px;
+      color: #c4bdb0;
+      margin-bottom: 32px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--ink);
+      padding: 16px 40px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: 2px solid var(--gold);
+    }
+
+    .cta-button:hover {
+      background: transparent;
+      color: var(--gold);
+    }
+
+    .footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 48px;
+      border-top: 2px solid var(--gold);
+      text-align: center;
+    }
+
+    .footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: #c4bdb0;
+      margin: 0;
+    }
+
+    .footer a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .footer a:hover {
+      color: var(--gold-light);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        padding: 0 24px;
+        gap: 12px;
+      }
+
+      .nav-links a {
+        font-size: 8px;
+        padding: 4px 8px;
+      }
+
+      .page-header {
+        padding: 40px 24px;
+      }
+
+      .page-header h1 {
+        font-size: 36px;
+      }
+
+      .content {
+        padding: 40px 24px;
+      }
+
+      iframe {
+        height: 600px;
+      }
+
+      .cta-section {
+        padding: 40px 24px;
+      }
+
+      .cta-section h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <div class="nav-links">
+    <a href="index.html"><span>●</span> Blueprint</a>
+    <a href="cover.html"><span>●</span> Cover</a>
+    <a href="page2.html"><span>●</span> Portfolio</a>
+    <a href="page3.html"><span>●</span> Ask Ameera</a>
+    <a href="page4.html"><span>●</span> Letter</a>
+    <a href="page5.html"><span>●</span> Case Study</a>
+    <a href="page6.html"><span>●</span> Why Hire</a>
+    <a href="fleet-management.html" class="active"><span>●</span> Solutions/Automations</a>
+    <a href="page2.html#contact"><span>●</span> Contact</a>
+  </div>
+</nav>
+
+<section class="page-header">
+  <span class="subtitle">Fleet Compliance Management</span>
+  <h1>Fleet Management System</h1>
+  <p>Real-time driver document tracking, automated compliance alerts, and operational intelligence. Manage 250+ drivers with enterprise-grade visibility and control.</p>
+</section>
+
+<section class="content">
+  
+  <div class="demo-section">
+    <h2>Key Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="icon">📋</span>
+        <h3>Real-Time Tracking</h3>
+        <p>Monitor driver documents (licenses, PDPs, passports, permits) with live expiration status and automated alerts.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">⚠️</span>
+        <h3>21-Day Alert Threshold</h3>
+        <p>Proactive notifications flag documents expiring within 21 days, preventing operational downtime.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📊</span>
+        <h3>Enterprise Dashboard</h3>
+        <p>Scalable data table supporting 250+ drivers with advanced filtering, search, and pagination.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📁</span>
+        <h3>Document Upload</h3>
+        <p>Secure file storage with drag-and-drop upload for scanned documents and compliance records.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🔄</span>
+        <h3>Archive Management</h3>
+        <p>Store driver details for future reference with full restore capabilities and audit trails.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🎯</span>
+        <h3>Document Renewal Status</h3>
+        <p>Quick view indicators showing how many drivers need each document type renewed.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>Live Demo</h2>
+    <p>Explore the Fleet Management System in action. The demo includes sample driver data with real-time compliance monitoring and document tracking capabilities.</p>
+    
+    <div class="iframe-container">
+      <div class="iframe-header">
+        <h3>Fleet Compliance Management Dashboard</h3>
+      </div>
+      <iframe 
+        src="https://3000-ipbu6b1201rx7b6tsbo5e-2c5b119a.us2.manus.computer"
+        title="Fleet Management Demo"
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Ready to Streamline Your Fleet Operations?</h2>
+    <p>Deploy the Fleet Management System for your organization. Get real-time visibility, automated compliance alerts, and eliminate operational downtime.</p>
+    <a href="page2.html#contact" class="cta-button">Get Started</a>
+  </div>
+
+</section>
+
+<footer class="footer">
+  <p><p>&copy; 2026 iBMit Ai PTY LTD. All rights reserved. | <a href="page2.html#contact">Contact</a> | <a href="index.html">Home</a></p>copy; 2026 iBMit Ai PTY LTD. All rights reserved. | <a href="https://www.ibmai.dev">Resume</a> | <a href="page2.html#contact">Contact</a> | <a href="index.html">Home</a></p>
+</footer>
+
+<script>
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    if (link.href === window.location.href) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+</script>
+
+</body>
+</html>
